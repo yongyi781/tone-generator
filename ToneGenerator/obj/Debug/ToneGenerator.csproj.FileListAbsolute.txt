@@ -1,0 +1,20 @@
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.exe.config
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.exe
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.pdb
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\bin\Debug\NAudio.dll
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\bin\Debug\NAudio.xml
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.csprojResolveAssemblyReference.cache
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.Form1.resources
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.csproj.GenerateResource.Cache
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.exe
+c:\users\yongyi chen\documents\visual studio 11\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.pdb
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.exe.config
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.exe
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.pdb
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.Form1.resources
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.csproj.GenerateResource.Cache
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.exe
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\bin\Debug\ToneGenerator.pdb
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\bin\Debug\NAudio.dll
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\bin\Debug\NAudio.xml
+C:\Users\Yongyi\Documents\Visual Studio 2012\Projects\ToneGenerator\ToneGenerator\obj\Debug\ToneGenerator.csprojResolveAssemblyReference.cache
