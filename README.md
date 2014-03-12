@@ -4,7 +4,7 @@ A Tone generator Windows app made by myself. Yeah.
 
 ## Features
 
-* Plays a pure tone of a speicifed frequency.
+* Plays a pure tone of a specified frequency.
 * You can set the frequency by increments of half a semitone, a semitone, or an octave.
 * Includes linear and logarithmic volume slider.
 
