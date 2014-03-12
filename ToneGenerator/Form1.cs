@@ -111,6 +111,10 @@ namespace ToneGenerator
 
         private void SetVolume(float volume)
         {
+            if (volume < 0.0f)
+                volume = 0.0f;
+            if (volume > 1.0f)
+                volume = 1.0f;
             if (waveOut != null)
                 waveOut.Volume = volume;
             volumeLabel.Text = "Volume: " + volume;
