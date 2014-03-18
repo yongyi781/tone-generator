@@ -24,8 +24,6 @@ namespace ToneGenerator
             InitializeComponent();
             frequencyNumeric.Maximum = waveProvider.WaveFormat.SampleRate / 2;
             waveProvider.Frequency = (float)frequencyNumeric.Value;
-            var doubleBufferPropertyInfo = dBVolumeSlider.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            doubleBufferPropertyInfo.SetValue(dBVolumeSlider, true, null);
 
             minusButton.Tag = 1m / HalfFrequencyIncrement;
             plusButton.Tag = HalfFrequencyIncrement;
@@ -33,6 +31,11 @@ namespace ToneGenerator
             nextNoteButton.Tag = FrequencyIncrement;
             prevOctaveButton.Tag = 0.5m;
             nextOctaveButton.Tag = 2m;
+
+            waveOut = new WaveOut(Handle);
+            waveOut.DesiredLatency = 100;
+            waveOut.Init(waveProvider);
+            waveOut.Volume = (float)linearVolumeSlider.Value / linearVolumeSlider.Maximum;
         }
 
         /// <summary>
@@ -93,19 +96,14 @@ namespace ToneGenerator
         {
             if (waveOut == null || waveOut.PlaybackState == PlaybackState.Stopped)
             {
-                waveOut = new WaveOut(Handle);
-                waveOut.Volume = (float)linearVolumeSlider.Value / linearVolumeSlider.Maximum;
-                waveOut.Init(waveProvider);
-                waveOut.DesiredLatency = 0;
+                // Start
                 waveOut.Play();
-                leftCheckBox.Enabled = rightCheckBox.Enabled = false;
             }
             else
             {
+                // Stop
                 waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
-                leftCheckBox.Enabled = rightCheckBox.Enabled = true;
+                waveProvider.Sample = 0;
             }
         }
 
@@ -160,14 +158,14 @@ namespace ToneGenerator
 
         private void leftCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            waveProvider.PlayLeftChannel = leftCheckBox.Checked;
+            waveProvider.LeftChannelScaleFactor = leftCheckBox.Checked ? 1f : 0f;
             if (!leftCheckBox.Checked && !rightCheckBox.Checked)
                 rightCheckBox.Checked = true;
         }
 
         private void rightCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            waveProvider.PlayRightChannel = rightCheckBox.Checked;
+            waveProvider.RightChannelScaleFactor = rightCheckBox.Checked ? 1f : 0f;
             if (!leftCheckBox.Checked && !rightCheckBox.Checked)
                 leftCheckBox.Checked = true;
         }
