@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 
@@ -92,18 +93,21 @@ namespace ToneGenerator
             StartStopSineWave();
         }
 
-        private void StartStopSineWave()
+        private async void StartStopSineWave()
         {
-            if (waveOut == null || waveOut.PlaybackState == PlaybackState.Stopped)
+            if (!waveProvider.IsPlaying)
             {
-                // Start
-                waveOut.Play();
+                waveProvider.Sample = 0;
+                waveProvider.IsPlaying = true;
+                if (waveOut.PlaybackState == PlaybackState.Stopped)
+                    waveOut.Play();
             }
             else
             {
-                // Stop
-                waveOut.Stop();
-                waveProvider.Sample = 0;
+                waveProvider.InitiateStop();
+                await Task.Delay(2 * waveOut.DesiredLatency + (int)(1000 * SineWaveProvider32.RAMP_DURATION));
+                if (!waveProvider.IsPlaying)
+                    waveOut.Stop();
             }
         }
 
