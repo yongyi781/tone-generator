@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using NAudio.Wave;
 
 namespace ToneGenerator
@@ -27,31 +28,9 @@ namespace ToneGenerator
         /// <summary>
         /// Creates a new <see cref="SineWaveProvider32"/> with default settings.
         /// </summary>
-        public SineWaveProvider32()
-            : base(SAMPLE_RATE, 2)
-        {
-            Frequency = 440f;
-            Amplitude = 1.0f;
-            LeftChannelScaleFactor = 1f;
-            RightChannelScaleFactor = 1f;
-        }
+        public SineWaveProvider32() : base(SAMPLE_RATE, 2) { }
 
-        /// <summary>
-        /// Gets or sets the frequency of the sine wave.
-        /// </summary>
-        public float Frequency { get; set; }
-        /// <summary>
-        /// Gets or sets the amplitude of the sine wave.
-        /// </summary>
-        public float Amplitude { get; set; }
-        /// <summary>
-        /// The scale factor of the amplitude for the left channel. Must be between 0 and 1.
-        /// </summary>
-        public float LeftChannelScaleFactor { get; set; }
-        /// <summary>
-        /// The scale factor of the amplitude for the right channel. Must be between 0 and 1.
-        /// </summary>
-        public float RightChannelScaleFactor { get; set; }
+        public Collection<Soundtrack> Soundtracks { get; private set; } = new Collection<Soundtrack>();
         /// <summary>
         /// Gets or sets the current sample count.
         /// </summary>
@@ -75,11 +54,19 @@ namespace ToneGenerator
             {
                 for (int i = 0; i < sampleCount; i += 2)
                 {
-                    float val = (float)(Amplitude * Math.Sin((2 * Math.PI * Frequency * Sample) / sampleRate));
-                    if (Sample < RAMP_SAMPLES)
-                        val *= RampIn(Sample, RAMP_SAMPLES);
-                    buffer[i + offset] = LeftChannelScaleFactor * val;
-                    buffer[i + offset + 1] = RightChannelScaleFactor * val;
+                    float left = 0, right = 0;
+                    foreach (var track in Soundtracks)
+                    {
+                        float val = (float)(track.Amplitude * Math.Sin((2 * Math.PI * track.Frequency * Sample) / sampleRate));
+                        if (Sample < RAMP_SAMPLES)
+                            val *= RampIn(Sample, RAMP_SAMPLES);
+                        if (track.Left)
+                            left += val;
+                        if (track.Right)
+                            right += val;
+                    }
+                    buffer[i + offset] = left;
+                    buffer[i + offset + 1] = right;
                     ++Sample;
                 }
             }
@@ -87,11 +74,19 @@ namespace ToneGenerator
             {
                 for (int i = 0; i < sampleCount; i += 2)
                 {
-                    float val = 0;
-                    if (Sample < stopSample + RAMP_SAMPLES)
-                        val = (float)(Amplitude * Math.Sin((2 * Math.PI * Frequency * Sample) / sampleRate)) * RampOut(Sample - stopSample, RAMP_SAMPLES);
-                    buffer[i + offset] = LeftChannelScaleFactor * val;
-                    buffer[i + offset + 1] = RightChannelScaleFactor * val;
+                    float left = 0, right = 0;
+                    foreach (var track in Soundtracks)
+                    {
+                        float val = 0;
+                        if (Sample < stopSample + RAMP_SAMPLES)
+                            val = (float)(track.Amplitude * Math.Sin((2 * Math.PI * track.Frequency * Sample) / sampleRate)) * RampOut(Sample - stopSample, RAMP_SAMPLES);
+                        if (track.Left)
+                            left += val;
+                        if (track.Right)
+                            right += val;
+                    }
+                    buffer[i + offset] = left;
+                    buffer[i + offset + 1] = right;
                     ++Sample;
                 }
             }

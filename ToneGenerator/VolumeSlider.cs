@@ -23,6 +23,16 @@ namespace ToneGenerator
         }
 
         /// <summary>
+        /// Raises the <see cref="Resize"/> event.
+        /// </summary>
+        /// <param name="e">An System.EventArgs that contains the event data.</param>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Invalidate();
+        }
+
+        /// <summary>
         /// Raises the <see cref="Paint"/> event.
         /// </summary>
         /// <param name="pe">A <see cref="PaintEventArgs"/> that contains the event data.</param>
