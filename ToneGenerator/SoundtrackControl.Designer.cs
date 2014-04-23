@@ -55,7 +55,7 @@
             this.rightCheckBox.Checked = true;
             this.rightCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rightCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.rightCheckBox.Location = new System.Drawing.Point(243, 61);
+            this.rightCheckBox.Location = new System.Drawing.Point(272, 67);
             this.rightCheckBox.Name = "rightCheckBox";
             this.rightCheckBox.Size = new System.Drawing.Size(60, 20);
             this.rightCheckBox.TabIndex = 26;
@@ -70,7 +70,7 @@
             this.leftCheckBox.Checked = true;
             this.leftCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.leftCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.leftCheckBox.Location = new System.Drawing.Point(185, 61);
+            this.leftCheckBox.Location = new System.Drawing.Point(214, 67);
             this.leftCheckBox.Name = "leftCheckBox";
             this.leftCheckBox.Size = new System.Drawing.Size(52, 20);
             this.leftCheckBox.TabIndex = 25;
@@ -81,7 +81,7 @@
             // volumeLabel
             // 
             this.volumeLabel.AutoSize = true;
-            this.volumeLabel.Location = new System.Drawing.Point(-3, 63);
+            this.volumeLabel.Location = new System.Drawing.Point(11, 69);
             this.volumeLabel.Name = "volumeLabel";
             this.volumeLabel.Size = new System.Drawing.Size(90, 15);
             this.volumeLabel.TabIndex = 24;
@@ -91,7 +91,7 @@
             // 
             this.nextOctaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nextOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.nextOctaveButton.Location = new System.Drawing.Point(280, 3);
+            this.nextOctaveButton.Location = new System.Drawing.Point(309, 9);
             this.nextOctaveButton.Name = "nextOctaveButton";
             this.nextOctaveButton.Size = new System.Drawing.Size(23, 23);
             this.nextOctaveButton.TabIndex = 22;
@@ -104,7 +104,7 @@
             // 
             this.prevOctaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.prevOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.prevOctaveButton.Location = new System.Drawing.Point(257, 3);
+            this.prevOctaveButton.Location = new System.Drawing.Point(286, 9);
             this.prevOctaveButton.Name = "prevOctaveButton";
             this.prevOctaveButton.Size = new System.Drawing.Size(23, 23);
             this.prevOctaveButton.TabIndex = 21;
@@ -117,7 +117,7 @@
             // 
             this.nextNoteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nextNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.nextNoteButton.Location = new System.Drawing.Point(225, 3);
+            this.nextNoteButton.Location = new System.Drawing.Point(254, 9);
             this.nextNoteButton.Name = "nextNoteButton";
             this.nextNoteButton.Size = new System.Drawing.Size(23, 23);
             this.nextNoteButton.TabIndex = 20;
@@ -130,7 +130,7 @@
             // 
             this.prevNoteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.prevNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.prevNoteButton.Location = new System.Drawing.Point(202, 3);
+            this.prevNoteButton.Location = new System.Drawing.Point(231, 9);
             this.prevNoteButton.Name = "prevNoteButton";
             this.prevNoteButton.Size = new System.Drawing.Size(23, 23);
             this.prevNoteButton.TabIndex = 19;
@@ -142,7 +142,7 @@
             // frequencyLabel
             // 
             this.frequencyLabel.AutoSize = true;
-            this.frequencyLabel.Location = new System.Drawing.Point(-3, 5);
+            this.frequencyLabel.Location = new System.Drawing.Point(11, 11);
             this.frequencyLabel.Name = "frequencyLabel";
             this.frequencyLabel.Size = new System.Drawing.Size(65, 15);
             this.frequencyLabel.TabIndex = 14;
@@ -153,7 +153,7 @@
             this.frequencyNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.frequencyNumeric.DecimalPlaces = 2;
-            this.frequencyNumeric.Location = new System.Drawing.Point(68, 3);
+            this.frequencyNumeric.Location = new System.Drawing.Point(82, 9);
             this.frequencyNumeric.Maximum = new decimal(new int[] {
             44100,
             0,
@@ -165,7 +165,7 @@
             0,
             131072});
             this.frequencyNumeric.Name = "frequencyNumeric";
-            this.frequencyNumeric.Size = new System.Drawing.Size(73, 23);
+            this.frequencyNumeric.Size = new System.Drawing.Size(88, 23);
             this.frequencyNumeric.TabIndex = 16;
             this.frequencyNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.frequencyNumeric.Value = new decimal(new int[] {
@@ -178,7 +178,7 @@
             // volumePictureBox
             // 
             this.volumePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("volumePictureBox.Image")));
-            this.volumePictureBox.Location = new System.Drawing.Point(0, 36);
+            this.volumePictureBox.Location = new System.Drawing.Point(14, 42);
             this.volumePictureBox.Name = "volumePictureBox";
             this.volumePictureBox.Size = new System.Drawing.Size(16, 16);
             this.volumePictureBox.TabIndex = 15;
@@ -188,7 +188,7 @@
             // 
             this.plusButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.plusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.plusButton.Location = new System.Drawing.Point(170, 3);
+            this.plusButton.Location = new System.Drawing.Point(199, 9);
             this.plusButton.Name = "plusButton";
             this.plusButton.Size = new System.Drawing.Size(23, 23);
             this.plusButton.TabIndex = 18;
@@ -201,7 +201,7 @@
             // 
             this.minusButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.minusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.minusButton.Location = new System.Drawing.Point(147, 3);
+            this.minusButton.Location = new System.Drawing.Point(176, 9);
             this.minusButton.Name = "minusButton";
             this.minusButton.Size = new System.Drawing.Size(23, 23);
             this.minusButton.TabIndex = 17;
@@ -214,9 +214,9 @@
             // 
             this.dBVolumeSlider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dBVolumeSlider.Location = new System.Drawing.Point(24, 36);
+            this.dBVolumeSlider.Location = new System.Drawing.Point(36, 42);
             this.dBVolumeSlider.Name = "dBVolumeSlider";
-            this.dBVolumeSlider.Size = new System.Drawing.Size(279, 16);
+            this.dBVolumeSlider.Size = new System.Drawing.Size(296, 16);
             this.dBVolumeSlider.TabIndex = 27;
             this.toolTip.SetToolTip(this.dBVolumeSlider, "Controls the volume on a logarithmic scale.");
             this.dBVolumeSlider.Volume = 0.25F;
@@ -226,6 +226,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.rightCheckBox);
             this.Controls.Add(this.leftCheckBox);
             this.Controls.Add(this.volumeLabel);
@@ -242,7 +243,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "SoundtrackControl";
-            this.Size = new System.Drawing.Size(306, 80);
+            this.Size = new System.Drawing.Size(340, 95);
             ((System.ComponentModel.ISupportInitialize)(this.frequencyNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumePictureBox)).EndInit();
             this.ResumeLayout(false);

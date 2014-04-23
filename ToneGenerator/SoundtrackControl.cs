@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ToneGenerator
@@ -26,13 +19,34 @@ namespace ToneGenerator
             prevOctaveButton.Tag = 0.5m;
             nextOctaveButton.Tag = 2m;
 
-            SetVolume(0.1f);
+            SetAmplitude(0.1f);
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
             Soundtrack.Left = leftCheckBox.Checked;
             Soundtrack.Right = rightCheckBox.Checked;
         }
 
         public Soundtrack Soundtrack { get; private set; } = new Soundtrack();
+
+        public void SetAmplitude(float volume)
+        {
+            if (volume < 0.0f)
+                volume = 0.0f;
+            if (volume > 1.0f)
+                volume = 1.0f;
+            volumeLabel.Text = "Amplitude: " + volume;
+            Soundtrack.Amplitude = volume;
+            dBVolumeSlider.Volume = volume;
+        }
+
+        public void SetLeft(bool value)
+        {
+            Soundtrack.Left = leftCheckBox.Checked = value;
+        }
+
+        public void SetRight(bool value)
+        {
+            Soundtrack.Right = rightCheckBox.Checked = value;
+        }
 
         /// <summary>
         /// Processes shortcut keys for frequency and volume controls.
@@ -50,7 +64,7 @@ namespace ToneGenerator
                     logVolume -= 0.05f;
                 else if (keyData == Keys.Add)
                     logVolume += 0.05f;
-                SetVolume((float)Math.Pow(10, logVolume));
+                SetAmplitude((float)Math.Pow(10, logVolume));
                 return true;
             }
 
@@ -80,20 +94,9 @@ namespace ToneGenerator
 
         }
 
-        private void SetVolume(float volume)
-        {
-            if (volume < 0.0f)
-                volume = 0.0f;
-            if (volume > 1.0f)
-                volume = 1.0f;
-            volumeLabel.Text = "Amplitude: " + volume;
-            Soundtrack.Amplitude = volume;
-            dBVolumeSlider.Volume = volume;
-        }
-
         private void dBVolumeSlider_VolumeChanged(object sender, EventArgs e)
         {
-            SetVolume(dBVolumeSlider.Volume);
+            SetAmplitude(dBVolumeSlider.Volume);
         }
 
         private void frequencyNumeric_ValueChanged(object sender, EventArgs e)
@@ -119,12 +122,12 @@ namespace ToneGenerator
 
         private void leftCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            Soundtrack.Left = leftCheckBox.Checked;
+            SetLeft(leftCheckBox.Checked);
         }
 
         private void rightCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            Soundtrack.Right = rightCheckBox.Checked;
+            SetRight(rightCheckBox.Checked);
         }
     }
 }

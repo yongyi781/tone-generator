@@ -32,6 +32,8 @@ namespace ToneGenerator
             waveOut.Init(waveProvider);
             waveOut.Volume = 1;
 
+            soundtrackControl2.SetLeft(false);
+            soundtrackControl2.SetRight(false);
             soundtrackControls.Add(soundtrackControl1);
             soundtrackControls.Add(soundtrackControl2);
             foreach (var control in soundtrackControls)
