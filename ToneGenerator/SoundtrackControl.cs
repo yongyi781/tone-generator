@@ -8,7 +8,9 @@ namespace ToneGenerator
         const decimal FrequencyIncrement = 1.0594630943592952645618252949463m;
         const decimal HalfFrequencyIncrement = 1.0293022366434920287823718007739m;
 
-        public SoundtrackControl()
+        public SoundtrackControl() : this(true) { }
+
+        public SoundtrackControl(bool play)
         {
             InitializeComponent();
 
@@ -21,8 +23,8 @@ namespace ToneGenerator
 
             SetAmplitude(0.1f);
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
-            Soundtrack.Left = leftCheckBox.Checked;
-            Soundtrack.Right = rightCheckBox.Checked;
+            Soundtrack.Left = leftCheckBox.Checked = play;
+            Soundtrack.Right = rightCheckBox.Checked = play;
         }
 
         public Soundtrack Soundtrack { get; private set; } = new Soundtrack();

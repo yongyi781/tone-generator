@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,16 +30,16 @@ namespace ToneGenerator
             InitializeComponent();
 
             waveOut = new WaveOut(Handle);
-            waveOut.DesiredLatency = 100;
+            waveOut.DesiredLatency = 150;
             waveOut.Init(waveProvider);
             waveOut.Volume = 1;
 
-            soundtrackControl2.SetLeft(false);
-            soundtrackControl2.SetRight(false);
-            soundtrackControls.Add(soundtrackControl1);
-            soundtrackControls.Add(soundtrackControl2);
-            foreach (var control in soundtrackControls)
+            for (int i = 0; i < 6; i++)
             {
+                var control = new SoundtrackControl(i == 0);
+                control.Dock = DockStyle.Fill;
+                soundtrackControls.Add(control);
+                tableLayoutPanel.Controls.Add(control);
                 waveProvider.Soundtracks.Add(control.Soundtrack);
             }
         }
@@ -72,12 +74,17 @@ namespace ToneGenerator
             {
                 waveProvider.Sample = 0;
                 waveProvider.IsPlaying = true;
+                playButton.ForeColor = Color.Green;
+                playButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 192);
                 if (waveOut.PlaybackState == PlaybackState.Stopped)
                     waveOut.Play();
             }
             else
             {
                 waveProvider.InitiateStop();
+                playButton.ForeColor = DefaultForeColor;
+                playButton.FlatAppearance.MouseOverBackColor = DefaultBackColor;
+                // Allow time to ramp out.
                 await Task.Delay(2 * waveOut.DesiredLatency + (int)(1000 * SineWaveProvider32.RAMP_DURATION));
                 if (!waveProvider.IsPlaying)
                     waveOut.Stop();

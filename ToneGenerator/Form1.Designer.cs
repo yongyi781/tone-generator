@@ -34,23 +34,24 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.playButton = new System.Windows.Forms.CheckBox();
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.soundtrackControl1 = new ToneGenerator.SoundtrackControl();
-            this.soundtrackControl2 = new ToneGenerator.SoundtrackControl();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.bottomPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // playButton
             // 
-            this.playButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.playButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.playButton.Location = new System.Drawing.Point(243, 8);
+            this.playButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.playButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.playButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playButton.Location = new System.Drawing.Point(0, 0);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.Size = new System.Drawing.Size(660, 23);
             this.playButton.TabIndex = 15;
-            this.playButton.Text = "&Play";
+            this.playButton.Text = "▶ ";
             this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.CheckedChanged += new System.EventHandler(this.playButton_CheckedChanged);
@@ -60,59 +61,37 @@
             this.bottomPanel.AutoSize = true;
             this.bottomPanel.Controls.Add(this.playButton);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 191);
+            this.bottomPanel.Location = new System.Drawing.Point(0, 307);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(330, 43);
+            this.bottomPanel.Size = new System.Drawing.Size(660, 23);
             this.bottomPanel.TabIndex = 17;
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.soundtrackControl1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.soundtrackControl2, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 191);
-            this.tableLayoutPanel1.TabIndex = 18;
-            // 
-            // soundtrackControl1
-            // 
-            this.soundtrackControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.soundtrackControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.soundtrackControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.soundtrackControl1.Location = new System.Drawing.Point(3, 3);
-            this.soundtrackControl1.Name = "soundtrackControl1";
-            this.soundtrackControl1.Size = new System.Drawing.Size(324, 89);
-            this.soundtrackControl1.TabIndex = 0;
-            // 
-            // soundtrackControl2
-            // 
-            this.soundtrackControl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.soundtrackControl2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.soundtrackControl2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.soundtrackControl2.Location = new System.Drawing.Point(3, 98);
-            this.soundtrackControl2.Name = "soundtrackControl2";
-            this.soundtrackControl2.Size = new System.Drawing.Size(324, 90);
-            this.soundtrackControl2.TabIndex = 1;
+            this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 2;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.Size = new System.Drawing.Size(660, 307);
+            this.tableLayoutPanel.TabIndex = 18;
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(330, 234);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(660, 330);
+            this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.bottomPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(346, 272);
+            this.MaximumSize = new System.Drawing.Size(2147483647, 368);
+            this.MinimumSize = new System.Drawing.Size(676, 368);
             this.Name = "Form1";
             this.Text = "Tone Generator";
             this.bottomPanel.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,9 +100,7 @@
 		#endregion
         private System.Windows.Forms.CheckBox playButton;
         private System.Windows.Forms.Panel bottomPanel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private SoundtrackControl soundtrackControl1;
-        private SoundtrackControl soundtrackControl2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
     }
 }
 
