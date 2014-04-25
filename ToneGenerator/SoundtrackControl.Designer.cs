@@ -155,7 +155,7 @@
             this.frequencyNumeric.DecimalPlaces = 2;
             this.frequencyNumeric.Location = new System.Drawing.Point(82, 9);
             this.frequencyNumeric.Maximum = new decimal(new int[] {
-            44100,
+            24000,
             0,
             0,
             0});
