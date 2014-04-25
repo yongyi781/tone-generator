@@ -61,8 +61,20 @@ namespace ToneGenerator
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
             }
-
         }
+
+        /// <summary>
+        /// Intercepts space and enter key presses.
+        /// </summary>
+        /// <param name="m">The message.</param>
+        /// <returns>true if the keystroke was processed and consumed by the control; otherwise, false to allow further processing.</returns>
+        protected override bool ProcessKeyPreview(ref Message m)
+        {
+            if (m.WParam == new IntPtr(13) || m.WParam == new IntPtr(32)) // Enter or space
+                return true;
+            return base.ProcessKeyPreview(ref m);
+        }
+
         private void playButton_CheckedChanged(object sender, EventArgs e)
         {
             StartStopSineWave();
