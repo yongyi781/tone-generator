@@ -37,7 +37,7 @@ namespace ToneGenerator
             for (int i = 0; i < 6; i++)
             {
                 var control = new SoundtrackControl(i == 0);
-                control.Dock = DockStyle.Fill;
+                control.Dock = DockStyle.Top;
                 soundtrackControls.Add(control);
                 tableLayoutPanel.Controls.Add(control);
                 waveProvider.Soundtracks.Add(control.Soundtrack);
@@ -78,6 +78,11 @@ namespace ToneGenerator
         private void playButton_CheckedChanged(object sender, EventArgs e)
         {
             StartStopSineWave();
+        }
+
+        private void masterVolumeSlider_VolumeChanged(object sender, EventArgs e)
+        {
+            waveOut.Volume = masterVolumeSlider.Volume;
         }
 
         private async void StartStopSineWave()

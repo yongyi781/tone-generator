@@ -58,12 +58,15 @@ namespace ToneGenerator
                     foreach (var track in Soundtracks)
                     {
                         float val = (float)(track.Amplitude * Math.Sin((2 * Math.PI * track.Frequency * Sample) / sampleRate));
-                        if (Sample < RAMP_SAMPLES)
-                            val *= RampIn(Sample, RAMP_SAMPLES);
                         if (track.Left)
                             left += val;
                         if (track.Right)
                             right += val;
+                    }
+                    if (Sample < RAMP_SAMPLES)
+                    {
+                        left *= RampIn(Sample, RAMP_SAMPLES);
+                        right *= RampIn(Sample, RAMP_SAMPLES);
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;

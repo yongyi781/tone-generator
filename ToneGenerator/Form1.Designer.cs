@@ -35,21 +35,22 @@
             this.playButton = new System.Windows.Forms.CheckBox();
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // playButton
             // 
             this.playButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.playButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.playButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.playButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Location = new System.Drawing.Point(0, 0);
+            this.playButton.Location = new System.Drawing.Point(0, 16);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(660, 23);
+            this.playButton.Size = new System.Drawing.Size(660, 25);
             this.playButton.TabIndex = 15;
             this.playButton.Text = "▶ ";
             this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -58,12 +59,12 @@
             // 
             // bottomPanel
             // 
-            this.bottomPanel.AutoSize = true;
             this.bottomPanel.Controls.Add(this.playButton);
+            this.bottomPanel.Controls.Add(this.masterVolumeSlider);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 307);
+            this.bottomPanel.Location = new System.Drawing.Point(0, 305);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(660, 23);
+            this.bottomPanel.Size = new System.Drawing.Size(660, 41);
             this.bottomPanel.TabIndex = 17;
             // 
             // tableLayoutPanel
@@ -77,23 +78,30 @@
             this.tableLayoutPanel.RowCount = 2;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(660, 307);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(660, 305);
             this.tableLayoutPanel.TabIndex = 18;
+            // 
+            // masterVolumeSlider
+            // 
+            this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
+            this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
+            this.masterVolumeSlider.Name = "masterVolumeSlider";
+            this.masterVolumeSlider.Size = new System.Drawing.Size(660, 16);
+            this.masterVolumeSlider.TabIndex = 16;
+            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(660, 330);
+            this.ClientSize = new System.Drawing.Size(660, 346);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.bottomPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(2147483647, 368);
-            this.MinimumSize = new System.Drawing.Size(676, 368);
+            this.MinimumSize = new System.Drawing.Size(676, 181);
             this.Name = "Form1";
             this.Text = "Tone Generator";
             this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
@@ -101,6 +109,7 @@
         private System.Windows.Forms.CheckBox playButton;
         private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private VolumeSlider masterVolumeSlider;
     }
 }
 
