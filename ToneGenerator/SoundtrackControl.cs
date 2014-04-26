@@ -14,6 +14,8 @@ namespace ToneGenerator
         {
             InitializeComponent();
 
+            frequencyNumeric.Maximum = SineWaveProvider32.SAMPLE_RATE / 2M;
+
             minusButton.Tag = 1m / HalfFrequencyIncrement;
             plusButton.Tag = HalfFrequencyIncrement;
             prevNoteButton.Tag = 1m / FrequencyIncrement;

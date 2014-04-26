@@ -12,7 +12,7 @@ namespace ToneGenerator
         /// <summary>
         /// The sample rate.
         /// </summary>
-        public const int SAMPLE_RATE = 48000;
+        public const int SAMPLE_RATE = 44100;
         /// <summary>
         /// Duration of the ramp in and out, in seconds.
         /// </summary>
