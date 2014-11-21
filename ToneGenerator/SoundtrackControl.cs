@@ -5,9 +5,6 @@ namespace ToneGenerator
 {
     public partial class SoundtrackControl : UserControl
     {
-        const decimal FrequencyIncrement = 1.0594630943592952645618252949463m;
-        const decimal HalfFrequencyIncrement = 1.0293022366434920287823718007739m;
-
         public SoundtrackControl() : this(true) { }
 
         public SoundtrackControl(bool play)
@@ -15,13 +12,6 @@ namespace ToneGenerator
             InitializeComponent();
 
             frequencyNumeric.Maximum = SineWaveProvider32.SAMPLE_RATE / 2M;
-
-            minusButton.Tag = 1m / HalfFrequencyIncrement;
-            plusButton.Tag = HalfFrequencyIncrement;
-            prevNoteButton.Tag = 1m / FrequencyIncrement;
-            nextNoteButton.Tag = FrequencyIncrement;
-            prevOctaveButton.Tag = 0.5m;
-            nextOctaveButton.Tag = 2m;
 
             SetAmplitude(0.1f);
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
@@ -75,27 +65,48 @@ namespace ToneGenerator
             switch (keyData)
             {
                 case Keys.OemMinus:
-                    MultiplyFrequency(1m / HalfFrequencyIncrement);
+                    MultiplyFrequency(1.0 / GetHalfFrequencyIncrement());
                     return true;
                 case Keys.Oemplus:
-                    MultiplyFrequency(HalfFrequencyIncrement);
+                    MultiplyFrequency(GetHalfFrequencyIncrement());
                     return true;
                 case Keys.Oemcomma:
-                    MultiplyFrequency(1m / FrequencyIncrement);
+                    MultiplyFrequency(1.0 / GetFrequencyIncrement());
                     return true;
                 case Keys.OemPeriod:
-                    MultiplyFrequency(FrequencyIncrement);
+                    MultiplyFrequency(GetFrequencyIncrement());
                     return true;
                 case Keys.OemOpenBrackets:
-                    MultiplyFrequency(0.5m);
+                    MultiplyFrequency(0.5);
                     return true;
                 case Keys.OemCloseBrackets:
-                    MultiplyFrequency(2m);
+                    MultiplyFrequency(2);
                     return true;
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
             }
 
+        }
+
+        private double GetFrequencyIncrement()
+        {
+            Form1 parent = ParentForm as Form1;
+            return parent == null ? Math.Pow(2.0, 1.0 / 12) : parent.FrequencyIncrement;
+        }
+
+        private double GetHalfFrequencyIncrement()
+        {
+            return Math.Sqrt(GetFrequencyIncrement());
+        }
+
+        private void MultiplyFrequency(double factor)
+        {
+            var value = frequencyNumeric.Value * (decimal)factor;
+            if (value < frequencyNumeric.Minimum)
+                value = frequencyNumeric.Minimum;
+            if (value > frequencyNumeric.Maximum)
+                value = frequencyNumeric.Maximum;
+            frequencyNumeric.Value = value;
         }
 
         private void dBVolumeSlider_VolumeChanged(object sender, EventArgs e)
@@ -108,20 +119,20 @@ namespace ToneGenerator
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
         }
 
-        private void MultiplyFrequency(decimal factor)
-        {
-            var value = frequencyNumeric.Value * factor;
-            if (value < frequencyNumeric.Minimum)
-                value = frequencyNumeric.Minimum;
-            if (value > frequencyNumeric.Maximum)
-                value = frequencyNumeric.Maximum;
-            frequencyNumeric.Value = value;
-        }
-
         private void changeFrequencyButtons_Click(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-            MultiplyFrequency((decimal)btn.Tag);
+            if (sender == minusButton)
+                MultiplyFrequency(1.0 / GetHalfFrequencyIncrement());
+            else if (sender == plusButton)
+                MultiplyFrequency(GetHalfFrequencyIncrement());
+            else if (sender == prevNoteButton)
+                MultiplyFrequency(1.0 / GetFrequencyIncrement());
+            else if (sender == nextNoteButton)
+                MultiplyFrequency(GetFrequencyIncrement());
+            else if (sender == prevOctaveButton)
+                MultiplyFrequency(0.5);
+            else if (sender == nextOctaveButton)
+                MultiplyFrequency(2.0);
         }
 
         private void leftCheckBox_CheckedChanged(object sender, EventArgs e)

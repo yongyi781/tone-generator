@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
@@ -14,9 +12,6 @@ namespace ToneGenerator
     /// </summary>
     public partial class Form1 : Form
     {
-        const decimal FrequencyIncrement = 1.0594630943592952645618252949463m;
-        const decimal HalfFrequencyIncrement = 1.0293022366434920287823718007739m;
-
         private WaveOut waveOut;
         private SineWaveProvider32 waveProvider = new SineWaveProvider32();
 
@@ -42,6 +37,11 @@ namespace ToneGenerator
                 tableLayoutPanel.Controls.Add(control);
                 waveProvider.Soundtracks.Add(control.Soundtrack);
             }
+        }
+
+        public double FrequencyIncrement
+        {
+            get { return Math.Pow(2.0, 1.0 / (double)divisionTonesUpDown.Value); }
         }
 
         /// <summary>
@@ -75,16 +75,6 @@ namespace ToneGenerator
             return base.ProcessKeyPreview(ref m);
         }
 
-        private void playButton_CheckedChanged(object sender, EventArgs e)
-        {
-            StartStopSineWave();
-        }
-
-        private void masterVolumeSlider_VolumeChanged(object sender, EventArgs e)
-        {
-            waveOut.Volume = masterVolumeSlider.Volume;
-        }
-
         private async void StartStopSineWave()
         {
             if (!waveProvider.IsPlaying)
@@ -106,6 +96,16 @@ namespace ToneGenerator
                 if (!waveProvider.IsPlaying)
                     waveOut.Stop();
             }
+        }
+
+        private void playButton_CheckedChanged(object sender, EventArgs e)
+        {
+            StartStopSineWave();
+        }
+
+        private void masterVolumeSlider_VolumeChanged(object sender, EventArgs e)
+        {
+            waveOut.Volume = masterVolumeSlider.Volume;
         }
     }
 }
