@@ -67,7 +67,7 @@
             this.bottomPanel.Controls.Add(this.playButton);
             this.bottomPanel.Controls.Add(this.masterVolumeSlider);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 305);
+            this.bottomPanel.Location = new System.Drawing.Point(0, 336);
             this.bottomPanel.Name = "bottomPanel";
             this.bottomPanel.Size = new System.Drawing.Size(660, 41);
             this.bottomPanel.TabIndex = 17;
@@ -92,7 +92,7 @@
             this.tableLayoutPanel.RowCount = 2;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(660, 272);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(660, 303);
             this.tableLayoutPanel.TabIndex = 18;
             // 
             // panel1
@@ -110,13 +110,18 @@
             // divisionTonesUpDown
             // 
             this.divisionTonesUpDown.Location = new System.Drawing.Point(164, 7);
+            this.divisionTonesUpDown.Maximum = new decimal(new int[] {
+            120000,
+            0,
+            0,
+            0});
             this.divisionTonesUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.divisionTonesUpDown.Name = "divisionTonesUpDown";
-            this.divisionTonesUpDown.Size = new System.Drawing.Size(46, 23);
+            this.divisionTonesUpDown.Size = new System.Drawing.Size(65, 23);
             this.divisionTonesUpDown.TabIndex = 1;
             this.divisionTonesUpDown.Value = new decimal(new int[] {
             12,
@@ -135,7 +140,7 @@
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(660, 346);
+            this.ClientSize = new System.Drawing.Size(660, 377);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.panel1);
