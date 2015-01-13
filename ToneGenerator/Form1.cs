@@ -107,5 +107,12 @@ namespace ToneGenerator
         {
             waveOut.Volume = masterVolumeSlider.Volume;
         }
+
+        private void minimumVolumeUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (var soundtrackControl in soundtrackControls)
+                soundtrackControl.SetMinimumVolume((float)minimumVolumeUpDown.Value);
+            masterVolumeSlider.MinimumDB = (float)minimumVolumeUpDown.Value;
+        }
     }
 }

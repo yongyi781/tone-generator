@@ -106,13 +106,13 @@ namespace ToneGenerator
         }
 
         // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)
-        private float RampIn(int sample, int rampSamples)
+        static float RampIn(int sample, int rampSamples)
         {
             return 0.5f - 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
         }
 
         // Cosine ramp out: 0.5 + 0.5*cos(pi*sample/threshold)
-        private float RampOut(int sample, int rampSamples)
+        static float RampOut(int sample, int rampSamples)
         {
             return 0.5f + 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
         }

@@ -37,10 +37,13 @@
             this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.minimumVolumeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.divisionTonesUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionTonesLabel = new System.Windows.Forms.Label();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minimumVolumeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,6 +79,7 @@
             // 
             this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
             this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
+            this.masterVolumeSlider.MinimumDB = -48F;
             this.masterVolumeSlider.Name = "masterVolumeSlider";
             this.masterVolumeSlider.Size = new System.Drawing.Size(660, 16);
             this.masterVolumeSlider.TabIndex = 16;
@@ -99,6 +103,8 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.minimumVolumeUpDown);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.divisionTonesUpDown);
             this.panel1.Controls.Add(this.divisionTonesLabel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -106,6 +112,38 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(660, 33);
             this.panel1.TabIndex = 19;
+            // 
+            // minimumVolumeUpDown
+            // 
+            this.minimumVolumeUpDown.Location = new System.Drawing.Point(366, 7);
+            this.minimumVolumeUpDown.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.minimumVolumeUpDown.Minimum = new decimal(new int[] {
+            900,
+            0,
+            0,
+            -2147483648});
+            this.minimumVolumeUpDown.Name = "minimumVolumeUpDown";
+            this.minimumVolumeUpDown.Size = new System.Drawing.Size(65, 23);
+            this.minimumVolumeUpDown.TabIndex = 3;
+            this.minimumVolumeUpDown.Value = new decimal(new int[] {
+            48,
+            0,
+            0,
+            -2147483648});
+            this.minimumVolumeUpDown.ValueChanged += new System.EventHandler(this.minimumVolumeUpDown_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(254, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 15);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "&Minimum volume:";
             // 
             // divisionTonesUpDown
             // 
@@ -152,6 +190,7 @@
             this.bottomPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minimumVolumeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -166,6 +205,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.NumericUpDown divisionTonesUpDown;
         private System.Windows.Forms.Label divisionTonesLabel;
+        private System.Windows.Forms.NumericUpDown minimumVolumeUpDown;
+        private System.Windows.Forms.Label label1;
     }
 }
 

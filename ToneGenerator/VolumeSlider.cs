@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -9,8 +10,66 @@ namespace ToneGenerator
     /// Tweaked volume slider that is double buffered and fixes divide by 0 bug on Windows XP.
     /// </summary>
     [CLSCompliant(false)]
-    public class VolumeSlider : NAudio.Gui.VolumeSlider
+    public class VolumeSlider : UserControl
     {
+        /// <summary>
+        /// Creates a new VolumeSlider control.
+        /// </summary>
+        public VolumeSlider()
+        {
+            Name = "VolumeSlider";
+            Size = new Size(96, 16);
+        }
+
+        /// <summary>
+        /// The volume for this control.
+        /// </summary>
+        private float volume = 1f;
+        [DefaultValue(1f)]
+        public float Volume
+        {
+            get
+            {
+                return volume;
+            }
+            set
+            {
+                if (value < 0f)
+                    value = 0f;
+                if (value > 1f)
+                    value = 1f;
+                if (volume != value)
+                {
+                    volume = value;
+                    if (VolumeChanged != null)
+                        VolumeChanged(this, EventArgs.Empty);
+                    Invalidate();
+                }
+            }
+        }
+
+        private float minimumDB = -48f;
+        /// <summary>
+        /// Gets or sets the minimum decibel volume for the control.
+        /// </summary>
+        public float MinimumDB
+        {
+            get
+            {
+                return minimumDB;
+            }
+            set
+            {
+                minimumDB = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Volume changed event
+        /// </summary>
+        public event EventHandler VolumeChanged;
+
         /// <summary>
         /// Raises the <see cref="HandleCreated"/> event.
         /// </summary>
@@ -20,6 +79,25 @@ namespace ToneGenerator
             base.OnHandleCreated(e);
 
             DoubleBuffered = true;
+        }
+
+        /// <summary>
+        /// <see cref="M:System.Windows.Forms.Control.OnMouseDown(System.Windows.Forms.MouseEventArgs)" />
+        /// </summary>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            SetVolumeFromMouse(e.X);
+            base.OnMouseDown(e);
+        }
+
+        /// <summary>
+        /// <see cref="M:System.Windows.Forms.Control.OnMouseMove(System.Windows.Forms.MouseEventArgs)" />
+        /// </summary>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                SetVolumeFromMouse(e.X);
+            base.OnMouseMove(e);
         }
 
         /// <summary>
@@ -42,13 +120,18 @@ namespace ToneGenerator
 
             pe.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
             float db = 20f * (float)Math.Log10(Volume);
-            float fraction = 1f - db / -48.0f;
-            int width = (int)((float)(Width - 2) * fraction);
+            float fraction = 1f - db / MinimumDB;
+            int width = (int)((Width - 2) * fraction);
             pe.Graphics.FillRectangle(Brushes.LightGreen, 1, 1, Math.Max(0, width), Height - 2);
             using (var stringFormat = new StringFormat { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center })
             {
                 pe.Graphics.DrawString(string.Format(CultureInfo.CurrentCulture, "{0:F2} dB", db), Font, Brushes.Black, ClientRectangle, stringFormat);
             }
+        }
+
+        private void SetVolumeFromMouse(int x)
+        {
+            Volume = x <= 0 ? 0f : (float)Math.Pow(10, (1f - (float)x / Width) * MinimumDB / 20f);
         }
     }
 }

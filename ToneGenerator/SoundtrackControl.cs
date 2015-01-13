@@ -21,6 +21,11 @@ namespace ToneGenerator
 
         public Soundtrack Soundtrack { get; private set; } = new Soundtrack();
 
+        public void SetMinimumVolume(float minVolume)
+        {
+            dBVolumeSlider.MinimumDB = minVolume;
+        }
+
         public void SetAmplitude(float volume)
         {
             if (volume < 0.0f)
