@@ -85,12 +85,18 @@ namespace ToneGenerator
                     float left = 0, right = 0;
                     foreach (var track in Soundtracks)
                     {
-                        track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
-
                         float val = 0;
                         if (Sample < stopSample + RAMP_SAMPLES)
+                        {
+                            track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
                             val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase))
                                 * RampOut(Sample - stopSample, RAMP_SAMPLES);
+                        }
+                        else
+                        {
+                            // Reset phase
+                            track.CurrentPhase = 0;
+                        }
                         if (track.Left)
                             left += val;
                         if (track.Right)
@@ -113,6 +119,9 @@ namespace ToneGenerator
         {
             IsPlaying = false;
             stopSample = Sample;
+            foreach (var track in Soundtracks)
+            {
+            }
         }
 
         // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)
