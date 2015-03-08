@@ -57,7 +57,9 @@ namespace ToneGenerator
                     float left = 0, right = 0;
                     foreach (var track in Soundtracks)
                     {
-                        float val = (float)(track.Amplitude * Math.Sin((2 * Math.PI * track.Frequency * Sample) / sampleRate));
+                        track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
+
+                        float val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase));
                         if (track.Left)
                             left += val;
                         if (track.Right)
@@ -65,24 +67,30 @@ namespace ToneGenerator
                     }
                     if (Sample < RAMP_SAMPLES)
                     {
+                        // Ramp in.
                         left *= RampIn(Sample, RAMP_SAMPLES);
                         right *= RampIn(Sample, RAMP_SAMPLES);
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;
+
                     ++Sample;
                 }
             }
             else
             {
+                // Not playing, but ramp out before stopping completely.
                 for (int i = 0; i < sampleCount; i += 2)
                 {
                     float left = 0, right = 0;
                     foreach (var track in Soundtracks)
                     {
+                        track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
+
                         float val = 0;
                         if (Sample < stopSample + RAMP_SAMPLES)
-                            val = (float)(track.Amplitude * Math.Sin((2 * Math.PI * track.Frequency * Sample) / sampleRate)) * RampOut(Sample - stopSample, RAMP_SAMPLES);
+                            val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase))
+                                * RampOut(Sample - stopSample, RAMP_SAMPLES);
                         if (track.Left)
                             left += val;
                         if (track.Right)
@@ -90,9 +98,11 @@ namespace ToneGenerator
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;
+
                     ++Sample;
                 }
             }
+
             return sampleCount;
         }
 
