@@ -12,6 +12,8 @@ namespace ToneGenerator
     /// </summary>
     public partial class Form1 : Form
     {
+        public const int DefaultLatency = 100;
+
         private WaveOut waveOut;
         private SineWaveProvider32 waveProvider = new SineWaveProvider32();
 
@@ -20,12 +22,12 @@ namespace ToneGenerator
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
         /// </summary>
-        public Form1()
+        public Form1(int desiredLatency = DefaultLatency)
         {
             InitializeComponent();
 
             waveOut = new WaveOut(Handle);
-            waveOut.DesiredLatency = 150;
+            waveOut.DesiredLatency = desiredLatency;
             waveOut.Init(waveProvider);
             waveOut.Volume = 1;
 

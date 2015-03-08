@@ -9,11 +9,16 @@ namespace ToneGenerator
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+
+            int desiredLatency = Form1.DefaultLatency;
+            if (args.Length >= 2 && (args[0] == "-l" || args[0] == "-latency"))
+                if (!int.TryParse(args[1], out desiredLatency))
+                    desiredLatency = Form1.DefaultLatency;
+			Application.Run(new Form1(desiredLatency));
 		}
 	}
 }
