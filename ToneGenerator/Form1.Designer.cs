@@ -34,13 +34,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.playButton = new System.Windows.Forms.CheckBox();
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.minimumVolumeUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.minVolumeLabel = new System.Windows.Forms.Label();
             this.divisionTonesUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionTonesLabel = new System.Windows.Forms.Label();
+            this.modeLabel = new System.Windows.Forms.Label();
+            this.modeComboBox = new System.Windows.Forms.ComboBox();
+            this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minimumVolumeUpDown)).BeginInit();
@@ -75,16 +77,6 @@
             this.bottomPanel.Size = new System.Drawing.Size(660, 41);
             this.bottomPanel.TabIndex = 17;
             // 
-            // masterVolumeSlider
-            // 
-            this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
-            this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
-            this.masterVolumeSlider.MinimumDB = -48F;
-            this.masterVolumeSlider.Name = "masterVolumeSlider";
-            this.masterVolumeSlider.Size = new System.Drawing.Size(660, 16);
-            this.masterVolumeSlider.TabIndex = 16;
-            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
-            // 
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
@@ -103,8 +95,10 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.modeComboBox);
+            this.panel1.Controls.Add(this.modeLabel);
             this.panel1.Controls.Add(this.minimumVolumeUpDown);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.minVolumeLabel);
             this.panel1.Controls.Add(this.divisionTonesUpDown);
             this.panel1.Controls.Add(this.divisionTonesLabel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -136,14 +130,14 @@
             -2147483648});
             this.minimumVolumeUpDown.ValueChanged += new System.EventHandler(this.minimumVolumeUpDown_ValueChanged);
             // 
-            // label1
+            // minVolumeLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(254, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "&Minimum volume:";
+            this.minVolumeLabel.AutoSize = true;
+            this.minVolumeLabel.Location = new System.Drawing.Point(254, 9);
+            this.minVolumeLabel.Name = "minVolumeLabel";
+            this.minVolumeLabel.Size = new System.Drawing.Size(106, 15);
+            this.minVolumeLabel.TabIndex = 2;
+            this.minVolumeLabel.Text = "&Minimum volume:";
             // 
             // divisionTonesUpDown
             // 
@@ -176,6 +170,40 @@
             this.divisionTonesLabel.TabIndex = 0;
             this.divisionTonesLabel.Text = "&Equal temperament tones:";
             // 
+            // modeLabel
+            // 
+            this.modeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.modeLabel.AutoSize = true;
+            this.modeLabel.Location = new System.Drawing.Point(465, 9);
+            this.modeLabel.Name = "modeLabel";
+            this.modeLabel.Size = new System.Drawing.Size(41, 15);
+            this.modeLabel.TabIndex = 4;
+            this.modeLabel.Text = "M&ode:";
+            // 
+            // modeComboBox
+            // 
+            this.modeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.modeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.modeComboBox.FormattingEnabled = true;
+            this.modeComboBox.Items.AddRange(new object[] {
+            "Pure tones",
+            "Alternating tones"});
+            this.modeComboBox.Location = new System.Drawing.Point(512, 6);
+            this.modeComboBox.Name = "modeComboBox";
+            this.modeComboBox.Size = new System.Drawing.Size(136, 23);
+            this.modeComboBox.TabIndex = 5;
+            this.modeComboBox.SelectedIndexChanged += new System.EventHandler(this.modeComboBox_SelectedIndexChanged);
+            // 
+            // masterVolumeSlider
+            // 
+            this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
+            this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
+            this.masterVolumeSlider.MinimumDB = -48F;
+            this.masterVolumeSlider.Name = "masterVolumeSlider";
+            this.masterVolumeSlider.Size = new System.Drawing.Size(660, 16);
+            this.masterVolumeSlider.TabIndex = 16;
+            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(660, 377);
@@ -206,7 +234,9 @@
         private System.Windows.Forms.NumericUpDown divisionTonesUpDown;
         private System.Windows.Forms.Label divisionTonesLabel;
         private System.Windows.Forms.NumericUpDown minimumVolumeUpDown;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label minVolumeLabel;
+        private System.Windows.Forms.Label modeLabel;
+        private System.Windows.Forms.ComboBox modeComboBox;
     }
 }
 

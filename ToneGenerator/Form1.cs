@@ -13,9 +13,10 @@ namespace ToneGenerator
     public partial class Form1 : Form
     {
         public const int DefaultLatency = 100;
+        public const int NumSoundtracks = 6;
 
         private WaveOut waveOut;
-        private SineWaveProvider32 waveProvider = new SineWaveProvider32();
+        private SineWaveProvider waveProvider = new SineWaveProvider();
 
         private List<SoundtrackControl> soundtrackControls = new List<SoundtrackControl>();
 
@@ -28,17 +29,17 @@ namespace ToneGenerator
 
             waveOut = new WaveOut(Handle);
             waveOut.DesiredLatency = desiredLatency;
-            waveOut.Init(waveProvider);
             waveOut.Volume = 1;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < NumSoundtracks; i++)
             {
                 var control = new SoundtrackControl(i == 0);
                 control.Dock = DockStyle.Top;
                 soundtrackControls.Add(control);
                 tableLayoutPanel.Controls.Add(control);
-                waveProvider.Soundtracks.Add(control.Soundtrack);
             }
+
+            modeComboBox.SelectedIndex = 0;
         }
 
         public double FrequencyIncrement
@@ -94,9 +95,26 @@ namespace ToneGenerator
                 playButton.ForeColor = DefaultForeColor;
                 playButton.FlatAppearance.MouseOverBackColor = DefaultBackColor;
                 // Allow time to ramp out.
-                await Task.Delay(2 * waveOut.DesiredLatency + (int)(1000 * SineWaveProvider32.RAMP_DURATION));
+                await Task.Delay(2 * waveOut.DesiredLatency + (int)(1000 * SineWaveProvider.RAMP_DURATION));
                 if (!waveProvider.IsPlaying)
                     waveOut.Stop();
+            }
+        }
+
+        private void SetWaveProvider(SineWaveProvider waveProvider)
+        {
+            if (this.waveProvider.IsPlaying)
+            {
+                StartStopSineWave();
+                playButton.Checked = false;
+            }
+
+            this.waveProvider = waveProvider;
+            waveOut.Init(waveProvider);
+            waveProvider.Soundtracks.Clear();
+            foreach (var trackControl in soundtrackControls)
+            {
+                waveProvider.Soundtracks.Add(trackControl.Soundtrack);
             }
         }
 
@@ -115,6 +133,21 @@ namespace ToneGenerator
             foreach (var soundtrackControl in soundtrackControls)
                 soundtrackControl.SetMinimumVolume((float)minimumVolumeUpDown.Value);
             masterVolumeSlider.MinimumDB = (float)minimumVolumeUpDown.Value;
+        }
+
+        private void modeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (modeComboBox.SelectedIndex)
+            {
+                case 0:
+                    SetWaveProvider(new SineWaveProvider());
+                    break;
+                case 1:
+                    SetWaveProvider(new AlternatingWaveProvider(0.1f));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

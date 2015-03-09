@@ -11,7 +11,7 @@ namespace ToneGenerator
         {
             InitializeComponent();
 
-            frequencyNumeric.Maximum = SineWaveProvider32.SAMPLE_RATE / 2M;
+            frequencyNumeric.Maximum = SineWaveProvider.SAMPLE_RATE / 2M;
 
             SetAmplitude(0.1f);
             Soundtrack.Frequency = (float)frequencyNumeric.Value;

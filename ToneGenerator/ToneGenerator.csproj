@@ -59,9 +59,9 @@
     <ApplicationIcon>sine_wave.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAudio, Version=1.7.2.19, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NAudio.1.7.2\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlternatingWaveProvider.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Soundtrack.cs" />
     <Compile Include="SoundtrackControl.cs">
@@ -90,7 +91,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SineWaveProvider32.cs" />
+    <Compile Include="SineWaveProvider.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

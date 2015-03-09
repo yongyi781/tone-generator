@@ -7,7 +7,8 @@ namespace ToneGenerator
     /// <summary>
     /// A wave provider that outputs a sine wave.
     /// </summary>
-    class SineWaveProvider32 : WaveProvider32
+    [CLSCompliant(false)]
+    public class SineWaveProvider : WaveProvider32
     {
         /// <summary>
         /// The sample rate.
@@ -26,9 +27,9 @@ namespace ToneGenerator
         private int stopSample = 0;
 
         /// <summary>
-        /// Creates a new <see cref="SineWaveProvider32"/> with default settings.
+        /// Creates a new <see cref="SineWaveProvider"/> with default settings.
         /// </summary>
-        public SineWaveProvider32() : base(SAMPLE_RATE, 2) { }
+        public SineWaveProvider() : base(SAMPLE_RATE, 2) { }
 
         public Collection<Soundtrack> Soundtracks { get; private set; } = new Collection<Soundtrack>();
         /// <summary>
@@ -119,9 +120,6 @@ namespace ToneGenerator
         {
             IsPlaying = false;
             stopSample = Sample;
-            foreach (var track in Soundtracks)
-            {
-            }
         }
 
         // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)
