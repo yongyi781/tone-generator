@@ -8,13 +8,14 @@ namespace ToneGenerator
     [CLSCompliant(false)]
     public class AlternatingWaveProvider : SineWaveProvider
     {
-        public AlternatingWaveProvider(float toneDuration)
+        public AlternatingWaveProvider(double period)
         {
-            ToneDuration = toneDuration;
+            Period = period;
         }
 
+        public double Period { get; set; }
         // Tone duration in seconds.
-        public float ToneDuration { get; set; }
+        public double ToneDuration { get { return Period / 2; } }
         public int ToneSamples { get { return (int)(SAMPLE_RATE * ToneDuration); } }
 
         // 0 if left side is being played, 1 if right side.

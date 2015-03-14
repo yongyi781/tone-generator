@@ -141,13 +141,22 @@ namespace ToneGenerator
             {
                 case 0:
                     SetWaveProvider(new SineWaveProvider());
+                    periodLabel.Visible = periodUpDown.Visible = false;
                     break;
                 case 1:
-                    SetWaveProvider(new AlternatingWaveProvider(0.1f));
+                    SetWaveProvider(new AlternatingWaveProvider((double)periodUpDown.Value / 1000));
+                    periodLabel.Visible = periodUpDown.Visible = true;
                     break;
                 default:
                     break;
             }
+        }
+
+        private void periodUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            var alternatingWaveProvider = waveProvider as AlternatingWaveProvider;
+            if (alternatingWaveProvider != null)
+                alternatingWaveProvider.Period = (double)periodUpDown.Value / 1000;
         }
     }
 }
