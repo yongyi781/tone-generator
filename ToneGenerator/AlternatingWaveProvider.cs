@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ToneGenerator
 {
     /// <summary>
-    /// Alternates between two tones, specified by the first 2 soundtracks.
+    /// Alternates between two sides, each having 3 soundtracks (in the current implementation).
     /// </summary>
     [CLSCompliant(false)]
     public class AlternatingWaveProvider : SineWaveProvider
@@ -21,8 +17,8 @@ namespace ToneGenerator
         public float ToneDuration { get; set; }
         public int ToneSamples { get { return (int)(SAMPLE_RATE * ToneDuration); } }
 
+        // 0 if left side is being played, 1 if right side.
         public int CurrentSoundtrackIndex { get; set; }
-        public Soundtrack CurrentSoundtrack { get { return Soundtracks[CurrentSoundtrackIndex]; } }
 
         public override int Read(float[] buffer, int offset, int sampleCount)
         {
@@ -31,13 +27,17 @@ namespace ToneGenerator
                 for (int i = 0; i < sampleCount; i += 2)
                 {
                     float left = 0, right = 0;
-                    CurrentSoundtrack.CurrentPhase += 2 * Math.PI * CurrentSoundtrack.Frequency / WaveFormat.SampleRate;
+                    for (int j = CurrentSoundtrackIndex; j < Soundtracks.Count; j += 2)
+                    {
+                        var track = Soundtracks[j];
+                        track.CurrentPhase += 2 * Math.PI * track.Frequency / WaveFormat.SampleRate;
 
-                    float val = (float)(CurrentSoundtrack.Amplitude * Math.Sin(CurrentSoundtrack.CurrentPhase));
-                    if (CurrentSoundtrack.Left)
-                        left += val;
-                    if (CurrentSoundtrack.Right)
-                        right += val;
+                        float val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase));
+                        if (track.Left)
+                            left += val;
+                        if (track.Right)
+                            right += val;
+                    }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;
 
@@ -59,8 +59,12 @@ namespace ToneGenerator
 
         private void SetSoundtrackIndex(int index)
         {
-            var soundtrack = Soundtracks[index];
-            soundtrack.CurrentPhase = CurrentSoundtrack.CurrentPhase;
+            int d = index == 0 ? 1 : -1;
+            for (int i = index; Math.Max(i, i + d) < Soundtracks.Count; i += 2)
+            {
+                // Move current phase into phase of soundtrack on other side
+                Soundtracks[i].CurrentPhase = Soundtracks[i + d].CurrentPhase;
+            }
             CurrentSoundtrackIndex = index;
         }
     }
