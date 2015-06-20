@@ -1,4 +1,6 @@
-﻿namespace ToneGenerator
+﻿using System;
+
+namespace ToneGenerator
 {
     partial class SoundtrackControl
     {

@@ -26,12 +26,15 @@ namespace ToneGenerator
             dBVolumeSlider.MinimumDB = minVolume;
         }
 
+        internal void SetMaximumValue(float maxVolume)
+        {
+            dBVolumeSlider.MaximumDB = maxVolume;
+        }
+
         public void SetAmplitude(float volume)
         {
             if (volume < 0.0f)
                 volume = 0.0f;
-            if (volume > 1.0f)
-                volume = 1.0f;
             volumeLabel.Text = "Amplitude: " + volume;
             Soundtrack.Amplitude = volume;
             dBVolumeSlider.Volume = volume;

@@ -28,16 +28,13 @@ namespace ToneGenerator
         [DefaultValue(1f)]
         public float Volume
         {
-            get
-            {
-                return volume;
-            }
+            get { return volume; }
             set
             {
                 if (value < 0f)
                     value = 0f;
-                if (value > 1f)
-                    value = 1f;
+                if (value > Utilities.DbToMag(maximumDB))
+                    value = Utilities.DbToMag(maximumDB);
                 if (volume != value)
                 {
                     volume = value;
@@ -54,13 +51,24 @@ namespace ToneGenerator
         /// </summary>
         public float MinimumDB
         {
-            get
-            {
-                return minimumDB;
-            }
+            get { return minimumDB; }
             set
             {
                 minimumDB = value;
+                Invalidate();
+            }
+        }
+
+        private float maximumDB = 0f;
+        /// <summary>
+        /// Gets or sets the minimum decibel volume for the control.
+        /// </summary>
+        public float MaximumDB
+        {
+            get { return maximumDB; }
+            set
+            {
+                maximumDB = value;
                 Invalidate();
             }
         }
@@ -119,8 +127,8 @@ namespace ToneGenerator
             base.OnPaint(pe);
 
             pe.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
-            float db = 20f * (float)Math.Log10(Volume);
-            float fraction = 1f - db / MinimumDB;
+            float db = Utilities.MagToDb(volume);
+            float fraction = 1f - (db - maximumDB) / (minimumDB - maximumDB);
             int width = (int)((Width - 2) * fraction);
             pe.Graphics.FillRectangle(Brushes.LightGreen, 1, 1, Math.Max(0, width), Height - 2);
             using (var stringFormat = new StringFormat { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center })
@@ -131,7 +139,7 @@ namespace ToneGenerator
 
         private void SetVolumeFromMouse(int x)
         {
-            Volume = x <= 0 ? 0f : (float)Math.Pow(10, (1f - (float)x / Width) * MinimumDB / 20f);
+            Volume = x <= 0 ? 0f : Utilities.DbToMag(maximumDB + (1f - (float)x / (Width - 2)) * (minimumDB - maximumDB));
         }
     }
 }

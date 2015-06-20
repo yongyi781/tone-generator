@@ -1,9 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using NAudio.Wave;
+using System.Collections.Generic;
 
 namespace ToneGenerator
 {
+    public class Calibration
+    {
+        public Calibration(List<float> frequencies, List<float> amplitudes)
+        {
+            Frequencies = frequencies;
+            Amplitudes = amplitudes;
+        }
+
+        public List<float> Frequencies { get; set; }
+        public List<float> Amplitudes { get; set; }
+    }
+
     /// <summary>
     /// A wave provider that outputs a sine wave.
     /// </summary>
@@ -40,6 +54,10 @@ namespace ToneGenerator
         /// Gets or sets whether the wave provider is in a playing state.
         /// </summary>
         public bool IsPlaying { get; set; }
+        /// <summary>
+        /// Gets or sets the calibration of the output sound.
+        /// </summary>
+        public Calibration Calibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
 
         /// <summary>
         /// Reads in a buffer.
@@ -60,7 +78,7 @@ namespace ToneGenerator
                     {
                         track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
 
-                        float val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase));
+                        float val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase));
                         if (track.Left)
                             left += val;
                         if (track.Right)
@@ -69,8 +87,8 @@ namespace ToneGenerator
                     if (Sample < RAMP_SAMPLES)
                     {
                         // Ramp in.
-                        left *= RampIn(Sample, RAMP_SAMPLES);
-                        right *= RampIn(Sample, RAMP_SAMPLES);
+                        left *= HannIn(Sample, RAMP_SAMPLES);
+                        right *= HannIn(Sample, RAMP_SAMPLES);
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;
@@ -90,8 +108,8 @@ namespace ToneGenerator
                         if (Sample < stopSample + RAMP_SAMPLES)
                         {
                             track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
-                            val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase))
-                                * RampOut(Sample - stopSample, RAMP_SAMPLES);
+                            val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase))
+                                * HannOut(Sample - stopSample, RAMP_SAMPLES);
                         }
                         else
                         {
@@ -122,16 +140,35 @@ namespace ToneGenerator
             stopSample = Sample;
         }
 
-        // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)
-        static float RampIn(int sample, int rampSamples)
+        public float GetCalibratedAmplitude(Soundtrack track) =>
+            Utilities.DbToMag(GetCalibrationDbValue(track.Frequency)) * track.Amplitude;
+
+        public float GetCalibrationDbValue(float frequency)
         {
-            return 0.5f - 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
+            int index = Calibration.Frequencies.BinarySearch(frequency);
+            if (index >= 0)
+                return Calibration.Amplitudes[index];
+            // Linear interpolation
+            int nextLargestIndex = ~index;
+            if (nextLargestIndex == 0)
+                return Calibration.Amplitudes[0];
+            if (nextLargestIndex == Calibration.Frequencies.Count)
+                return Calibration.Amplitudes[Calibration.Amplitudes.Count - 1];
+
+            float leftFreq = Calibration.Frequencies[nextLargestIndex - 1];
+            float rightFreq = Calibration.Frequencies[nextLargestIndex];
+            float t = (frequency - leftFreq) / (rightFreq - leftFreq);
+
+            return (1 - t) * Calibration.Amplitudes[nextLargestIndex - 1]
+                + t * Calibration.Amplitudes[nextLargestIndex];
         }
 
+        // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)
+        static float HannIn(int sample, int rampSamples) =>
+            0.5f - 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
+
         // Cosine ramp out: 0.5 + 0.5*cos(pi*sample/threshold)
-        static float RampOut(int sample, int rampSamples)
-        {
-            return 0.5f + 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
-        }
-    }
+        static float HannOut(int sample, int rampSamples) =>
+            0.5f + 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
+   }
 }

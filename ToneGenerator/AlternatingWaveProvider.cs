@@ -33,7 +33,7 @@ namespace ToneGenerator
                         var track = Soundtracks[j];
                         track.CurrentPhase += 2 * Math.PI * track.Frequency / WaveFormat.SampleRate;
 
-                        float val = (float)(track.Amplitude * Math.Sin(track.CurrentPhase));
+                        float val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase));
                         if (track.Left)
                             left += val;
                         if (track.Right)
