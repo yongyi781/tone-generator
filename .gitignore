@@ -157,3 +157,5 @@ $RECYCLE.BIN/
 *.jrs
 *.chk
 *.ide
+
+packages/
