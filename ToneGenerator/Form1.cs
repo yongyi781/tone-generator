@@ -50,10 +50,12 @@ namespace ToneGenerator
             }
             
             modeComboBox.SelectedIndex = 0;
-            LoadCalibration(Ear.Left, "Calibration/leftEarHearingLoss.json");
-            LoadCalibration(Ear.Right, "Calibration/rightEarHearingLoss.json");
+            LoadCalibration(sineWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
+            LoadCalibration(sineWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
+            LoadCalibration(alternatingWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
+            LoadCalibration(alternatingWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
         }
-        
+
         public double FrequencyIncrement
         {
             get { return Math.Pow(2.0, 1.0 / (double)divisionTonesUpDown.Value); }
@@ -126,14 +128,14 @@ namespace ToneGenerator
             waveOut.Init(waveProvider);
         }
 
-        private void LoadCalibration(Ear ear, string fileName)
+        private void LoadCalibration(SineWaveProvider waveProvider, Ear ear, string fileName)
         {
             (ear == Ear.Left ? calibrationLeftTextBox : calibrationRightTextBox).Text = fileName;
             var newCalibration = JsonConvert.DeserializeObject<Calibration>(File.ReadAllText(fileName));
             if (ear == Ear.Left)
-                CurrentWaveProvider.LeftCalibration = newCalibration;
+                waveProvider.LeftCalibration = newCalibration;
             else
-                CurrentWaveProvider.RightCalibration = newCalibration;
+                waveProvider.RightCalibration = newCalibration;
         }
 
         private void playButton_CheckedChanged(object sender, EventArgs e)
@@ -195,7 +197,7 @@ namespace ToneGenerator
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    LoadCalibration(ear, ofd.FileName);
+                    LoadCalibration(CurrentWaveProvider, ear, ofd.FileName);
                 }
             }
         }
