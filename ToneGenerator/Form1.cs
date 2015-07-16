@@ -23,12 +23,9 @@ namespace ToneGenerator
         private AlternatingWaveProvider alternatingWaveProvider;
 
         private List<SoundtrackControl> soundtrackControls = new List<SoundtrackControl>();
-        private Binding freqBinding;
-        private Binding ampBinding;
 
         [CLSCompliant(false)]
         public SineWaveProvider CurrentWaveProvider { get; set; }
-        public Calibration CurrentCalibration => CurrentWaveProvider.Calibration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
@@ -52,48 +49,11 @@ namespace ToneGenerator
                 alternatingWaveProvider.Soundtracks.Add(control.Soundtrack);
             }
             
-            // Binding
-            freqBinding = new Binding("Text", this, "CurrentCalibration.Frequencies");
-            ampBinding = new Binding("Text", this, "CurrentCalibration.Amplitudes");
-            freqBinding.Format += ListJsonBinding_Format;
-            ampBinding.Format += ListJsonBinding_Format;
-            freqBinding.Parse += ListJsonBinding_Parse;
-            ampBinding.Parse += ListJsonBinding_Parse;
-            calibrateFreqsTextBox.DataBindings.Add(freqBinding);
-            calibrateAmpsTextBox.DataBindings.Add(ampBinding);
-
             modeComboBox.SelectedIndex = 0;
+            LoadCalibration(Ear.Left, "Calibration/leftEarHearingLoss.json");
+            LoadCalibration(Ear.Right, "Calibration/rightEarHearingLoss.json");
         }
-
-        private void ListJsonBinding_Parse(object sender, ConvertEventArgs e)
-        {
-            e.Value = JsonConvert.DeserializeObject((string)e.Value, e.DesiredType);
-            if (sender == freqBinding)
-            {
-                // Sort and remove duplicates
-                var freqs = (ICollection<float>)e.Value;
-                e.Value = freqs.Distinct().OrderBy(f => f).ToList();
-            }
-
-            // Make sure Amplitudes is the same length as Frequencies
-            int frequenciesCount = sender == freqBinding ? ((ICollection<float>)e.Value).Count : CurrentCalibration.Frequencies.Count;
-            var currentAmps = sender == ampBinding ? (List<float>)e.Value : CurrentCalibration.Amplitudes;
-            int sizeDiff = frequenciesCount - currentAmps.Count;
-            if (sizeDiff != 0)
-            {
-                if (sizeDiff > 0)
-                    currentAmps.AddRange(Enumerable.Repeat(0f, sizeDiff));
-                else if (sizeDiff < 0)
-                    currentAmps.RemoveRange(frequenciesCount, -sizeDiff);
-                ampBinding.ReadValue();
-            }
-        }
-
-        private void ListJsonBinding_Format(object sender, ConvertEventArgs e)
-        {
-            e.Value = JsonConvert.SerializeObject(e.Value);
-        }
-
+        
         public double FrequencyIncrement
         {
             get { return Math.Pow(2.0, 1.0 / (double)divisionTonesUpDown.Value); }
@@ -166,6 +126,16 @@ namespace ToneGenerator
             waveOut.Init(waveProvider);
         }
 
+        private void LoadCalibration(Ear ear, string fileName)
+        {
+            (ear == Ear.Left ? calibrationLeftTextBox : calibrationRightTextBox).Text = fileName;
+            var newCalibration = JsonConvert.DeserializeObject<Calibration>(File.ReadAllText(fileName));
+            if (ear == Ear.Left)
+                CurrentWaveProvider.LeftCalibration = newCalibration;
+            else
+                CurrentWaveProvider.RightCalibration = newCalibration;
+        }
+
         private void playButton_CheckedChanged(object sender, EventArgs e)
         {
             StartStopSineWave(playButton.Checked);
@@ -201,8 +171,6 @@ namespace ToneGenerator
                 default:
                     break;
             }
-            freqBinding.ReadValue();
-            ampBinding.ReadValue();
         }
 
         private void periodUpDown_ValueChanged(object sender, EventArgs e)
@@ -216,25 +184,9 @@ namespace ToneGenerator
             calibrationPanel.Visible = calibrateButton.Checked;
         }
 
-        private void calibrateSaveButton_Click(object sender, EventArgs e)
+        private void calibrateBrowseButton_Click(object sender, EventArgs e)
         {
-            using (var sfd = new SaveFileDialog
-            {
-                FileName = "calibration.json",
-                InitialDirectory = Path.Combine(Environment.CurrentDirectory, "Calibration"),
-                Filter = "JSON Files|*.json|All Files|*.*"
-            })
-            {
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    var str = JsonConvert.SerializeObject(CurrentWaveProvider.Calibration, Formatting.Indented);
-                    File.WriteAllText(sfd.FileName, str);
-                }
-            }
-        }
-
-        private void calibrateLoadButton_Click(object sender, EventArgs e)
-        {
+            var ear = sender == calibrateLeftBrowseButton ? Ear.Left : Ear.Right;
             using (var ofd = new OpenFileDialog
             {
                 InitialDirectory = Path.Combine(Environment.CurrentDirectory, "Calibration"),
@@ -243,11 +195,11 @@ namespace ToneGenerator
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    CurrentWaveProvider.Calibration = JsonConvert.DeserializeObject<Calibration>(File.ReadAllText(ofd.FileName));
-                    freqBinding.ReadValue();
-                    ampBinding.ReadValue();
+                    LoadCalibration(ear, ofd.FileName);
                 }
             }
         }
     }
+
+    public enum Ear { Left, Right }
 }

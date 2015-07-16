@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using NAudio.Wave;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 
 namespace ToneGenerator
@@ -11,11 +9,34 @@ namespace ToneGenerator
         public Calibration(List<float> frequencies, List<float> amplitudes)
         {
             Frequencies = frequencies;
-            Amplitudes = amplitudes;
+            AmplitudesDb = amplitudes;
         }
 
-        public List<float> Frequencies { get; set; }
-        public List<float> Amplitudes { get; set; }
+        public List<float> Frequencies { get; }
+        public List<float> AmplitudesDb { get; }
+
+        public float GetCalibratedAmplitude(Soundtrack track) =>
+            Utilities.DbToMag(GetAmplitudeDb(track.Frequency)) * track.Amplitude;
+
+        public float GetAmplitudeDb(float frequency)
+        {
+            int index = Frequencies.BinarySearch(frequency);
+            if (index >= 0)
+                return AmplitudesDb[index];
+            // Linear interpolation
+            int nextLargestIndex = ~index;
+            if (nextLargestIndex == 0)
+                return AmplitudesDb[0];
+            if (nextLargestIndex == Frequencies.Count)
+                return AmplitudesDb[AmplitudesDb.Count - 1];
+
+            float leftFreq = Frequencies[nextLargestIndex - 1];
+            float rightFreq = Frequencies[nextLargestIndex];
+            float t = (frequency - leftFreq) / (rightFreq - leftFreq);
+
+            return (1 - t) * AmplitudesDb[nextLargestIndex - 1]
+                + t * AmplitudesDb[nextLargestIndex];
+        }
     }
 
     /// <summary>
@@ -45,7 +66,7 @@ namespace ToneGenerator
         /// </summary>
         public SineWaveProvider() : base(SAMPLE_RATE, 2) { }
 
-        public Collection<Soundtrack> Soundtracks { get; private set; } = new Collection<Soundtrack>();
+        public List<Soundtrack> Soundtracks { get; private set; } = new List<Soundtrack>();
         /// <summary>
         /// Gets or sets the current sample count.
         /// </summary>
@@ -57,7 +78,11 @@ namespace ToneGenerator
         /// <summary>
         /// Gets or sets the calibration of the output sound.
         /// </summary>
-        public Calibration Calibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
+        public Calibration LeftCalibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
+        /// <summary>
+        /// Gets or sets the calibration of the output sound.
+        /// </summary>
+        public Calibration RightCalibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
 
         /// <summary>
         /// Reads in a buffer.
@@ -78,11 +103,11 @@ namespace ToneGenerator
                     {
                         track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
 
-                        float val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase));
+                        float val = (float)(Math.Sin(track.CurrentPhase));
                         if (track.Left)
-                            left += val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
                         if (track.Right)
-                            right += val;
+                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
                     }
                     if (Sample < RAMP_SAMPLES)
                     {
@@ -108,7 +133,7 @@ namespace ToneGenerator
                         if (Sample < stopSample + RAMP_SAMPLES)
                         {
                             track.CurrentPhase += 2 * Math.PI * track.Frequency / sampleRate;
-                            val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase))
+                            val = (float)(Math.Sin(track.CurrentPhase))
                                 * HannOut(Sample - stopSample, RAMP_SAMPLES);
                         }
                         else
@@ -117,9 +142,9 @@ namespace ToneGenerator
                             track.CurrentPhase = 0;
                         }
                         if (track.Left)
-                            left += val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
                         if (track.Right)
-                            right += val;
+                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;
@@ -138,29 +163,6 @@ namespace ToneGenerator
         {
             IsPlaying = false;
             stopSample = Sample;
-        }
-
-        public float GetCalibratedAmplitude(Soundtrack track) =>
-            Utilities.DbToMag(GetCalibrationDbValue(track.Frequency)) * track.Amplitude;
-
-        public float GetCalibrationDbValue(float frequency)
-        {
-            int index = Calibration.Frequencies.BinarySearch(frequency);
-            if (index >= 0)
-                return Calibration.Amplitudes[index];
-            // Linear interpolation
-            int nextLargestIndex = ~index;
-            if (nextLargestIndex == 0)
-                return Calibration.Amplitudes[0];
-            if (nextLargestIndex == Calibration.Frequencies.Count)
-                return Calibration.Amplitudes[Calibration.Amplitudes.Count - 1];
-
-            float leftFreq = Calibration.Frequencies[nextLargestIndex - 1];
-            float rightFreq = Calibration.Frequencies[nextLargestIndex];
-            float t = (frequency - leftFreq) / (rightFreq - leftFreq);
-
-            return (1 - t) * Calibration.Amplitudes[nextLargestIndex - 1]
-                + t * Calibration.Amplitudes[nextLargestIndex];
         }
 
         // Cosine ramp in: 0.5 - 0.5*cos(pi*sample/threshold)

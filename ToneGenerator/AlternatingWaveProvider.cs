@@ -33,11 +33,11 @@ namespace ToneGenerator
                         var track = Soundtracks[j];
                         track.CurrentPhase += 2 * Math.PI * track.Frequency / WaveFormat.SampleRate;
 
-                        float val = (float)(GetCalibratedAmplitude(track) * Math.Sin(track.CurrentPhase));
+                        float val = (float)(Math.Sin(track.CurrentPhase));
                         if (track.Left)
-                            left += val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
                         if (track.Right)
-                            right += val;
+                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;

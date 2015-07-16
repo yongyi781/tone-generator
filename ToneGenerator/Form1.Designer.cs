@@ -48,12 +48,12 @@
             this.divisionTonesUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionTonesLabel = new System.Windows.Forms.Label();
             this.calibrationPanel = new System.Windows.Forms.Panel();
-            this.calibrateLoadButton = new System.Windows.Forms.Button();
-            this.calibrateSaveButton = new System.Windows.Forms.Button();
-            this.calibrateAmpsTextBox = new System.Windows.Forms.TextBox();
-            this.calibrateAmpsLabel = new System.Windows.Forms.Label();
-            this.calibrateFreqsTextBox = new System.Windows.Forms.TextBox();
-            this.calibrateFreqsLabel = new System.Windows.Forms.Label();
+            this.calibrationRightBrowseButton = new System.Windows.Forms.Button();
+            this.calibrateLeftBrowseButton = new System.Windows.Forms.Button();
+            this.calibrationRightTextBox = new System.Windows.Forms.TextBox();
+            this.rightEarLabel = new System.Windows.Forms.Label();
+            this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
+            this.leftEarLabel = new System.Windows.Forms.Label();
             this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -138,6 +138,11 @@
             this.maxVolumeUpDown.Name = "maxVolumeUpDown";
             this.maxVolumeUpDown.Size = new System.Drawing.Size(50, 23);
             this.maxVolumeUpDown.TabIndex = 5;
+            this.maxVolumeUpDown.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.maxVolumeUpDown.ValueChanged += new System.EventHandler(this.minMaxVolumeUpDown_ValueChanged);
             // 
             // maxVolumeLabel
@@ -233,7 +238,7 @@
             this.minVolumeUpDown.Size = new System.Drawing.Size(50, 23);
             this.minVolumeUpDown.TabIndex = 3;
             this.minVolumeUpDown.Value = new decimal(new int[] {
-            48,
+            20,
             0,
             0,
             -2147483648});
@@ -281,12 +286,12 @@
             // 
             // calibrationPanel
             // 
-            this.calibrationPanel.Controls.Add(this.calibrateLoadButton);
-            this.calibrationPanel.Controls.Add(this.calibrateSaveButton);
-            this.calibrationPanel.Controls.Add(this.calibrateAmpsTextBox);
-            this.calibrationPanel.Controls.Add(this.calibrateAmpsLabel);
-            this.calibrationPanel.Controls.Add(this.calibrateFreqsTextBox);
-            this.calibrationPanel.Controls.Add(this.calibrateFreqsLabel);
+            this.calibrationPanel.Controls.Add(this.calibrationRightBrowseButton);
+            this.calibrationPanel.Controls.Add(this.calibrateLeftBrowseButton);
+            this.calibrationPanel.Controls.Add(this.calibrationRightTextBox);
+            this.calibrationPanel.Controls.Add(this.rightEarLabel);
+            this.calibrationPanel.Controls.Add(this.calibrationLeftTextBox);
+            this.calibrationPanel.Controls.Add(this.leftEarLabel);
             this.calibrationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calibrationPanel.Location = new System.Drawing.Point(0, 33);
             this.calibrationPanel.Name = "calibrationPanel";
@@ -294,65 +299,67 @@
             this.calibrationPanel.TabIndex = 1;
             this.calibrationPanel.Visible = false;
             // 
-            // calibrateLoadButton
+            // calibrationRightBrowseButton
             // 
-            this.calibrateLoadButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrateLoadButton.Location = new System.Drawing.Point(91, 64);
-            this.calibrateLoadButton.Name = "calibrateLoadButton";
-            this.calibrateLoadButton.Size = new System.Drawing.Size(106, 23);
-            this.calibrateLoadButton.TabIndex = 4;
-            this.calibrateLoadButton.Text = "&Load from file...";
-            this.calibrateLoadButton.UseVisualStyleBackColor = true;
-            this.calibrateLoadButton.Click += new System.EventHandler(this.calibrateLoadButton_Click);
+            this.calibrationRightBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.calibrationRightBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.calibrationRightBrowseButton.Location = new System.Drawing.Point(667, 35);
+            this.calibrationRightBrowseButton.Name = "calibrationRightBrowseButton";
+            this.calibrationRightBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.calibrationRightBrowseButton.TabIndex = 5;
+            this.calibrationRightBrowseButton.Text = "&Browse...";
+            this.calibrationRightBrowseButton.UseVisualStyleBackColor = true;
+            this.calibrationRightBrowseButton.Click += new System.EventHandler(this.calibrateBrowseButton_Click);
             // 
-            // calibrateSaveButton
+            // calibrateLeftBrowseButton
             // 
-            this.calibrateSaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrateSaveButton.Location = new System.Drawing.Point(203, 64);
-            this.calibrateSaveButton.Name = "calibrateSaveButton";
-            this.calibrateSaveButton.Size = new System.Drawing.Size(97, 23);
-            this.calibrateSaveButton.TabIndex = 5;
-            this.calibrateSaveButton.Text = "&Save to file...";
-            this.calibrateSaveButton.UseVisualStyleBackColor = true;
-            this.calibrateSaveButton.Click += new System.EventHandler(this.calibrateSaveButton_Click);
+            this.calibrateLeftBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.calibrateLeftBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.calibrateLeftBrowseButton.Location = new System.Drawing.Point(667, 6);
+            this.calibrateLeftBrowseButton.Name = "calibrateLeftBrowseButton";
+            this.calibrateLeftBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.calibrateLeftBrowseButton.TabIndex = 4;
+            this.calibrateLeftBrowseButton.Text = "&Browse...";
+            this.calibrateLeftBrowseButton.UseVisualStyleBackColor = true;
+            this.calibrateLeftBrowseButton.Click += new System.EventHandler(this.calibrateBrowseButton_Click);
             // 
-            // calibrateAmpsTextBox
+            // calibrationRightTextBox
             // 
-            this.calibrateAmpsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.calibrationRightTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.calibrateAmpsTextBox.Font = new System.Drawing.Font("Consolas", 10F);
-            this.calibrateAmpsTextBox.Location = new System.Drawing.Point(91, 35);
-            this.calibrateAmpsTextBox.Name = "calibrateAmpsTextBox";
-            this.calibrateAmpsTextBox.Size = new System.Drawing.Size(651, 23);
-            this.calibrateAmpsTextBox.TabIndex = 3;
+            this.calibrationRightTextBox.Location = new System.Drawing.Point(75, 35);
+            this.calibrationRightTextBox.Name = "calibrationRightTextBox";
+            this.calibrationRightTextBox.ReadOnly = true;
+            this.calibrationRightTextBox.Size = new System.Drawing.Size(586, 23);
+            this.calibrationRightTextBox.TabIndex = 3;
             // 
-            // calibrateAmpsLabel
+            // rightEarLabel
             // 
-            this.calibrateAmpsLabel.AutoSize = true;
-            this.calibrateAmpsLabel.Location = new System.Drawing.Point(12, 38);
-            this.calibrateAmpsLabel.Name = "calibrateAmpsLabel";
-            this.calibrateAmpsLabel.Size = new System.Drawing.Size(71, 15);
-            this.calibrateAmpsLabel.TabIndex = 2;
-            this.calibrateAmpsLabel.Text = "&Amplitudes:";
+            this.rightEarLabel.AutoSize = true;
+            this.rightEarLabel.Location = new System.Drawing.Point(12, 38);
+            this.rightEarLabel.Name = "rightEarLabel";
+            this.rightEarLabel.Size = new System.Drawing.Size(57, 15);
+            this.rightEarLabel.TabIndex = 2;
+            this.rightEarLabel.Text = "&Right ear:";
             // 
-            // calibrateFreqsTextBox
+            // calibrationLeftTextBox
             // 
-            this.calibrateFreqsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.calibrationLeftTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.calibrateFreqsTextBox.Font = new System.Drawing.Font("Consolas", 10F);
-            this.calibrateFreqsTextBox.Location = new System.Drawing.Point(91, 6);
-            this.calibrateFreqsTextBox.Name = "calibrateFreqsTextBox";
-            this.calibrateFreqsTextBox.Size = new System.Drawing.Size(651, 23);
-            this.calibrateFreqsTextBox.TabIndex = 1;
+            this.calibrationLeftTextBox.Location = new System.Drawing.Point(75, 6);
+            this.calibrationLeftTextBox.Name = "calibrationLeftTextBox";
+            this.calibrationLeftTextBox.ReadOnly = true;
+            this.calibrationLeftTextBox.Size = new System.Drawing.Size(586, 23);
+            this.calibrationLeftTextBox.TabIndex = 1;
             // 
-            // calibrateFreqsLabel
+            // leftEarLabel
             // 
-            this.calibrateFreqsLabel.AutoSize = true;
-            this.calibrateFreqsLabel.Location = new System.Drawing.Point(12, 9);
-            this.calibrateFreqsLabel.Name = "calibrateFreqsLabel";
-            this.calibrateFreqsLabel.Size = new System.Drawing.Size(73, 15);
-            this.calibrateFreqsLabel.TabIndex = 0;
-            this.calibrateFreqsLabel.Text = "&Frequencies:";
+            this.leftEarLabel.AutoSize = true;
+            this.leftEarLabel.Location = new System.Drawing.Point(12, 9);
+            this.leftEarLabel.Name = "leftEarLabel";
+            this.leftEarLabel.Size = new System.Drawing.Size(49, 15);
+            this.leftEarLabel.TabIndex = 0;
+            this.leftEarLabel.Text = "&Left ear:";
             // 
             // masterVolumeSlider
             // 
@@ -410,12 +417,12 @@
         private System.Windows.Forms.CheckBox calibrateButton;
         private System.Windows.Forms.NumericUpDown maxVolumeUpDown;
         private System.Windows.Forms.Label maxVolumeLabel;
-        private System.Windows.Forms.Label calibrateFreqsLabel;
-        private System.Windows.Forms.TextBox calibrateFreqsTextBox;
-        private System.Windows.Forms.TextBox calibrateAmpsTextBox;
-        private System.Windows.Forms.Label calibrateAmpsLabel;
-        private System.Windows.Forms.Button calibrateLoadButton;
-        private System.Windows.Forms.Button calibrateSaveButton;
+        private System.Windows.Forms.Label leftEarLabel;
+        private System.Windows.Forms.TextBox calibrationLeftTextBox;
+        private System.Windows.Forms.TextBox calibrationRightTextBox;
+        private System.Windows.Forms.Label rightEarLabel;
+        private System.Windows.Forms.Button calibrateLeftBrowseButton;
+        private System.Windows.Forms.Button calibrationRightBrowseButton;
     }
 }
 

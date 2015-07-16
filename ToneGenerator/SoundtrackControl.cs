@@ -13,7 +13,7 @@ namespace ToneGenerator
 
             frequencyNumeric.Maximum = SineWaveProvider.SAMPLE_RATE / 2M;
 
-            SetAmplitude(0.1f);
+            SetAmplitude(1f);
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
             Soundtrack.Left = leftCheckBox.Checked = play;
             Soundtrack.Right = rightCheckBox.Checked = play;
