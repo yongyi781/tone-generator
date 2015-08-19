@@ -55,6 +55,7 @@
             this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
             this.leftEarLabel = new System.Windows.Forms.Label();
             this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
+            this.useLoudnessCheckBox = new System.Windows.Forms.CheckBox();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).BeginInit();
@@ -286,6 +287,7 @@
             // 
             // calibrationPanel
             // 
+            this.calibrationPanel.Controls.Add(this.useLoudnessCheckBox);
             this.calibrationPanel.Controls.Add(this.calibrationRightBrowseButton);
             this.calibrationPanel.Controls.Add(this.calibrateLeftBrowseButton);
             this.calibrationPanel.Controls.Add(this.calibrationRightTextBox);
@@ -372,6 +374,18 @@
             this.masterVolumeSlider.TabIndex = 0;
             this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
             // 
+            // useLoudnessCheckBox
+            // 
+            this.useLoudnessCheckBox.AutoSize = true;
+            this.useLoudnessCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.useLoudnessCheckBox.Location = new System.Drawing.Point(75, 64);
+            this.useLoudnessCheckBox.Name = "useLoudnessCheckBox";
+            this.useLoudnessCheckBox.Size = new System.Drawing.Size(234, 20);
+            this.useLoudnessCheckBox.TabIndex = 6;
+            this.useLoudnessCheckBox.Text = "&Use Loudness (maps 120 dB to 0 dBFS)";
+            this.useLoudnessCheckBox.UseVisualStyleBackColor = true;
+            this.useLoudnessCheckBox.CheckedChanged += new System.EventHandler(this.useLoudnessCheckBox_CheckedChanged);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(754, 377);
@@ -423,6 +437,7 @@
         private System.Windows.Forms.Label rightEarLabel;
         private System.Windows.Forms.Button calibrateLeftBrowseButton;
         private System.Windows.Forms.Button calibrationRightBrowseButton;
+        private System.Windows.Forms.CheckBox useLoudnessCheckBox;
     }
 }
 

@@ -35,9 +35,9 @@ namespace ToneGenerator
 
                         float val = (float)(Math.Sin(track.CurrentPhase));
                         if (track.Left)
-                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                         if (track.Right)
-                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
+                            right += RightCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;

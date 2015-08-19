@@ -15,8 +15,18 @@ namespace ToneGenerator
         public List<float> Frequencies { get; }
         public List<float> AmplitudesDb { get; }
 
-        public float GetCalibratedAmplitude(Soundtrack track) =>
-            Utilities.DbToMag(GetAmplitudeDb(track.Frequency)) * track.Amplitude;
+        public float GetCalibratedAmplitude(Soundtrack track, bool useLoudness = true)
+        {
+            // Loudness normalization: 120 dB -> 0 dBFS, 0 dB -> threshold
+            const float MaxDb = 120;
+            var thresholdDb = GetAmplitudeDb(track.Frequency);
+            var amplitudeDb = Utilities.MagToDb(track.Amplitude);
+            if (useLoudness)
+                amplitudeDb = -thresholdDb / MaxDb * (amplitudeDb - MaxDb);
+            else
+                amplitudeDb += thresholdDb;
+            return Utilities.DbToMag(amplitudeDb);
+        }
 
         public float GetAmplitudeDb(float frequency)
         {
@@ -83,6 +93,7 @@ namespace ToneGenerator
         /// Gets or sets the calibration of the output sound.
         /// </summary>
         public Calibration RightCalibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
+        public bool UseLoudnessInCalibration { get; set; }
 
         /// <summary>
         /// Reads in a buffer.
@@ -105,9 +116,9 @@ namespace ToneGenerator
 
                         float val = (float)(Math.Sin(track.CurrentPhase));
                         if (track.Left)
-                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                         if (track.Right)
-                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
+                            right += RightCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                     }
                     if (Sample < RAMP_SAMPLES)
                     {
@@ -142,9 +153,9 @@ namespace ToneGenerator
                             track.CurrentPhase = 0;
                         }
                         if (track.Left)
-                            left += LeftCalibration.GetCalibratedAmplitude(track) * val;
+                            left += LeftCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                         if (track.Right)
-                            right += RightCalibration.GetCalibratedAmplitude(track) * val;
+                            right += RightCalibration.GetCalibratedAmplitude(track, UseLoudnessInCalibration) * val;
                     }
                     buffer[i + offset] = left;
                     buffer[i + offset + 1] = right;

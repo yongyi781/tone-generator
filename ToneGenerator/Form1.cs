@@ -197,9 +197,15 @@ namespace ToneGenerator
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    LoadCalibration(CurrentWaveProvider, ear, ofd.FileName);
+                    LoadCalibration(sineWaveProvider, ear, ofd.FileName);
+                    LoadCalibration(alternatingWaveProvider, ear, ofd.FileName);
                 }
             }
+        }
+
+        private void useLoudnessCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            sineWaveProvider.UseLoudnessInCalibration = alternatingWaveProvider.UseLoudnessInCalibration = useLoudnessCheckBox.Checked;
         }
     }
 
