@@ -48,6 +48,7 @@
             this.divisionTonesUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionTonesLabel = new System.Windows.Forms.Label();
             this.calibrationPanel = new System.Windows.Forms.Panel();
+            this.useLoudnessCheckBox = new System.Windows.Forms.CheckBox();
             this.calibrationRightBrowseButton = new System.Windows.Forms.Button();
             this.calibrateLeftBrowseButton = new System.Windows.Forms.Button();
             this.calibrationRightTextBox = new System.Windows.Forms.TextBox();
@@ -55,7 +56,6 @@
             this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
             this.leftEarLabel = new System.Windows.Forms.Label();
             this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
-            this.useLoudnessCheckBox = new System.Windows.Forms.CheckBox();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).BeginInit();
@@ -301,6 +301,18 @@
             this.calibrationPanel.TabIndex = 1;
             this.calibrationPanel.Visible = false;
             // 
+            // useLoudnessCheckBox
+            // 
+            this.useLoudnessCheckBox.AutoSize = true;
+            this.useLoudnessCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.useLoudnessCheckBox.Location = new System.Drawing.Point(75, 64);
+            this.useLoudnessCheckBox.Name = "useLoudnessCheckBox";
+            this.useLoudnessCheckBox.Size = new System.Drawing.Size(234, 20);
+            this.useLoudnessCheckBox.TabIndex = 6;
+            this.useLoudnessCheckBox.Text = "&Use Loudness (maps 120 dB to 0 dBFS)";
+            this.useLoudnessCheckBox.UseVisualStyleBackColor = true;
+            this.useLoudnessCheckBox.CheckedChanged += new System.EventHandler(this.useLoudnessCheckBox_CheckedChanged);
+            // 
             // calibrationRightBrowseButton
             // 
             this.calibrationRightBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -373,18 +385,6 @@
             this.masterVolumeSlider.Size = new System.Drawing.Size(754, 16);
             this.masterVolumeSlider.TabIndex = 0;
             this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
-            // 
-            // useLoudnessCheckBox
-            // 
-            this.useLoudnessCheckBox.AutoSize = true;
-            this.useLoudnessCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.useLoudnessCheckBox.Location = new System.Drawing.Point(75, 64);
-            this.useLoudnessCheckBox.Name = "useLoudnessCheckBox";
-            this.useLoudnessCheckBox.Size = new System.Drawing.Size(234, 20);
-            this.useLoudnessCheckBox.TabIndex = 6;
-            this.useLoudnessCheckBox.Text = "&Use Loudness (maps 120 dB to 0 dBFS)";
-            this.useLoudnessCheckBox.UseVisualStyleBackColor = true;
-            this.useLoudnessCheckBox.CheckedChanged += new System.EventHandler(this.useLoudnessCheckBox_CheckedChanged);
             // 
             // Form1
             // 

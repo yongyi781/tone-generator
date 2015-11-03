@@ -54,6 +54,10 @@ namespace ToneGenerator
             LoadCalibration(sineWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
             LoadCalibration(alternatingWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
             LoadCalibration(alternatingWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
+
+            // Use loudness by default
+            useLoudnessCheckBox.Checked = true;
+            maxVolumeUpDown.Value = 120;
         }
 
         public double FrequencyIncrement
