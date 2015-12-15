@@ -34,6 +34,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.playButton = new System.Windows.Forms.CheckBox();
             this.bottomPanel = new System.Windows.Forms.Panel();
+            this.nextOctaveButton = new System.Windows.Forms.Button();
+            this.prevOctaveButton = new System.Windows.Forms.Button();
+            this.nextNoteButton = new System.Windows.Forms.Button();
+            this.prevNoteButton = new System.Windows.Forms.Button();
+            this.plusButton = new System.Windows.Forms.Button();
+            this.minusButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.maxVolumeUpDown = new System.Windows.Forms.NumericUpDown();
@@ -67,16 +73,18 @@
             // 
             // playButton
             // 
+            this.playButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.playButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.playButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.playButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Location = new System.Drawing.Point(0, 16);
+            this.playButton.Location = new System.Drawing.Point(165, 16);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(754, 25);
+            this.playButton.Size = new System.Drawing.Size(589, 25);
             this.playButton.TabIndex = 1;
             this.playButton.Text = "▶ ";
             this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,6 +93,12 @@
             // 
             // bottomPanel
             // 
+            this.bottomPanel.Controls.Add(this.nextOctaveButton);
+            this.bottomPanel.Controls.Add(this.prevOctaveButton);
+            this.bottomPanel.Controls.Add(this.nextNoteButton);
+            this.bottomPanel.Controls.Add(this.prevNoteButton);
+            this.bottomPanel.Controls.Add(this.plusButton);
+            this.bottomPanel.Controls.Add(this.minusButton);
             this.bottomPanel.Controls.Add(this.playButton);
             this.bottomPanel.Controls.Add(this.masterVolumeSlider);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -92,6 +106,72 @@
             this.bottomPanel.Name = "bottomPanel";
             this.bottomPanel.Size = new System.Drawing.Size(754, 41);
             this.bottomPanel.TabIndex = 17;
+            // 
+            // nextOctaveButton
+            // 
+            this.nextOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.nextOctaveButton.Location = new System.Drawing.Point(136, 17);
+            this.nextOctaveButton.Name = "nextOctaveButton";
+            this.nextOctaveButton.Size = new System.Drawing.Size(23, 23);
+            this.nextOctaveButton.TabIndex = 28;
+            this.nextOctaveButton.Text = ">>";
+            this.nextOctaveButton.UseVisualStyleBackColor = true;
+            this.nextOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // prevOctaveButton
+            // 
+            this.prevOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.prevOctaveButton.Location = new System.Drawing.Point(113, 17);
+            this.prevOctaveButton.Name = "prevOctaveButton";
+            this.prevOctaveButton.Size = new System.Drawing.Size(23, 23);
+            this.prevOctaveButton.TabIndex = 27;
+            this.prevOctaveButton.Text = "<<";
+            this.prevOctaveButton.UseVisualStyleBackColor = true;
+            this.prevOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // nextNoteButton
+            // 
+            this.nextNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.nextNoteButton.Location = new System.Drawing.Point(81, 17);
+            this.nextNoteButton.Name = "nextNoteButton";
+            this.nextNoteButton.Size = new System.Drawing.Size(23, 23);
+            this.nextNoteButton.TabIndex = 26;
+            this.nextNoteButton.Text = ">";
+            this.nextNoteButton.UseVisualStyleBackColor = true;
+            this.nextNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // prevNoteButton
+            // 
+            this.prevNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.prevNoteButton.Location = new System.Drawing.Point(58, 17);
+            this.prevNoteButton.Name = "prevNoteButton";
+            this.prevNoteButton.Size = new System.Drawing.Size(23, 23);
+            this.prevNoteButton.TabIndex = 25;
+            this.prevNoteButton.Text = "<";
+            this.prevNoteButton.UseVisualStyleBackColor = true;
+            this.prevNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // plusButton
+            // 
+            this.plusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.plusButton.Location = new System.Drawing.Point(26, 17);
+            this.plusButton.Name = "plusButton";
+            this.plusButton.Size = new System.Drawing.Size(23, 23);
+            this.plusButton.TabIndex = 24;
+            this.plusButton.Text = "+";
+            this.plusButton.UseVisualStyleBackColor = true;
+            this.plusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // minusButton
+            // 
+            this.minusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.minusButton.Location = new System.Drawing.Point(3, 17);
+            this.minusButton.Name = "minusButton";
+            this.minusButton.Size = new System.Drawing.Size(23, 23);
+            this.minusButton.TabIndex = 23;
+            this.minusButton.Text = "-";
+            this.minusButton.UseVisualStyleBackColor = true;
+            this.minusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
             // tableLayoutPanel
             // 
@@ -438,6 +518,12 @@
         private System.Windows.Forms.Button calibrateLeftBrowseButton;
         private System.Windows.Forms.Button calibrationRightBrowseButton;
         private System.Windows.Forms.CheckBox useLoudnessCheckBox;
+        private System.Windows.Forms.Button nextOctaveButton;
+        private System.Windows.Forms.Button prevOctaveButton;
+        private System.Windows.Forms.Button nextNoteButton;
+        private System.Windows.Forms.Button prevNoteButton;
+        private System.Windows.Forms.Button plusButton;
+        private System.Windows.Forms.Button minusButton;
     }
 }
 

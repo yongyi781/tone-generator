@@ -50,6 +50,16 @@ namespace ToneGenerator
             Soundtrack.Right = rightCheckBox.Checked = value;
         }
 
+        public void MultiplyFrequency(double factor)
+        {
+            var value = frequencyNumeric.Value * (decimal)factor;
+            if (value < frequencyNumeric.Minimum)
+                value = frequencyNumeric.Minimum;
+            if (value > frequencyNumeric.Maximum)
+                value = frequencyNumeric.Maximum;
+            frequencyNumeric.Value = value;
+        }
+
         /// <summary>
         /// Processes shortcut keys for frequency and volume controls.
         /// </summary>
@@ -105,16 +115,6 @@ namespace ToneGenerator
         private double GetHalfFrequencyIncrement()
         {
             return Math.Sqrt(GetFrequencyIncrement());
-        }
-
-        private void MultiplyFrequency(double factor)
-        {
-            var value = frequencyNumeric.Value * (decimal)factor;
-            if (value < frequencyNumeric.Minimum)
-                value = frequencyNumeric.Minimum;
-            if (value > frequencyNumeric.Maximum)
-                value = frequencyNumeric.Maximum;
-            frequencyNumeric.Value = value;
         }
 
         private void dBVolumeSlider_VolumeChanged(object sender, EventArgs e)

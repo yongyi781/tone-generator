@@ -211,6 +211,26 @@ namespace ToneGenerator
         {
             sineWaveProvider.UseLoudnessInCalibration = alternatingWaveProvider.UseLoudnessInCalibration = useLoudnessCheckBox.Checked;
         }
+
+        private void changeFrequencyButtons_Click(object sender, EventArgs e)
+        {
+            var factor = 1.0;
+            if (sender == minusButton)
+                factor = 1.0 / Math.Sqrt(FrequencyIncrement);
+            else if (sender == plusButton)
+                factor = Math.Sqrt(FrequencyIncrement);
+            else if (sender == prevNoteButton)
+                factor = 1.0 / FrequencyIncrement;
+            else if (sender == nextNoteButton)
+                factor = FrequencyIncrement;
+            else if (sender == prevOctaveButton)
+                factor = 0.5;
+            else if (sender == nextOctaveButton)
+                factor = 2.0;
+
+            foreach (var control in soundtrackControls)
+                control.MultiplyFrequency(factor);
+        }
     }
 
     public enum Ear { Left, Right }
