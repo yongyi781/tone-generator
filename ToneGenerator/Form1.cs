@@ -135,7 +135,20 @@ namespace ToneGenerator
         private void LoadCalibration(SineWaveProvider waveProvider, Ear ear, string fileName)
         {
             (ear == Ear.Left ? calibrationLeftTextBox : calibrationRightTextBox).Text = fileName;
-            var newCalibration = JsonConvert.DeserializeObject<Calibration>(File.ReadAllText(fileName));
+            Calibration2 newCalibration;
+            try
+            {
+                newCalibration = JsonConvert.DeserializeObject<Calibration2>(File.ReadAllText(fileName));
+                if (newCalibration.AmplitudesDb == null)
+                {
+                    newCalibration = Calibration2.FromOldCalibration(JsonConvert.DeserializeObject<Calibration>(File.ReadAllText(fileName)));
+                }
+            }
+            catch (JsonSerializationException ex)
+            {
+                MessageBox.Show("Calibration file is invalid. Message: " + ex.Message);
+                return;
+            }
             if (ear == Ear.Left)
                 waveProvider.LeftCalibration = newCalibration;
             else

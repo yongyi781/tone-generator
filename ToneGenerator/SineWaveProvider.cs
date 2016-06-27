@@ -4,51 +4,6 @@ using System.Collections.Generic;
 
 namespace ToneGenerator
 {
-    public class Calibration
-    {
-        public Calibration(List<float> frequencies, List<float> amplitudes)
-        {
-            Frequencies = frequencies;
-            AmplitudesDb = amplitudes;
-        }
-
-        public List<float> Frequencies { get; }
-        public List<float> AmplitudesDb { get; }
-
-        public float GetCalibratedAmplitude(Soundtrack track, bool useLoudness = true)
-        {
-            // Loudness normalization: 120 dB -> 0 dBFS, 0 dB -> threshold
-            const float MaxDb = 120;
-            var thresholdDb = GetAmplitudeDb(track.Frequency);
-            var amplitudeDb = Utilities.MagToDb(track.Amplitude);
-            if (useLoudness)
-                amplitudeDb = -thresholdDb / MaxDb * (amplitudeDb - MaxDb);
-            else
-                amplitudeDb += thresholdDb;
-            return Utilities.DbToMag(amplitudeDb);
-        }
-
-        public float GetAmplitudeDb(float frequency)
-        {
-            int index = Frequencies.BinarySearch(frequency);
-            if (index >= 0)
-                return AmplitudesDb[index];
-            // Linear interpolation
-            int nextLargestIndex = ~index;
-            if (nextLargestIndex == 0)
-                return AmplitudesDb[0];
-            if (nextLargestIndex == Frequencies.Count)
-                return AmplitudesDb[AmplitudesDb.Count - 1];
-
-            float leftFreq = Frequencies[nextLargestIndex - 1];
-            float rightFreq = Frequencies[nextLargestIndex];
-            float t = (frequency - leftFreq) / (rightFreq - leftFreq);
-
-            return (1 - t) * AmplitudesDb[nextLargestIndex - 1]
-                + t * AmplitudesDb[nextLargestIndex];
-        }
-    }
-
     /// <summary>
     /// A wave provider that outputs a sine wave.
     /// </summary>
@@ -88,11 +43,11 @@ namespace ToneGenerator
         /// <summary>
         /// Gets or sets the calibration of the output sound.
         /// </summary>
-        public Calibration LeftCalibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
+        public Calibration2 LeftCalibration { get; set; } = new Calibration2(new Dictionary<float, float> { { 1000, 0 } });
         /// <summary>
         /// Gets or sets the calibration of the output sound.
         /// </summary>
-        public Calibration RightCalibration { get; set; } = new Calibration(new List<float> { 1000 }, new List<float> { 0 });
+        public Calibration2 RightCalibration { get; set; } = new Calibration2(new Dictionary<float, float> { { 1000, 0 } });
         public bool UseLoudnessInCalibration { get; set; }
 
         /// <summary>
@@ -183,5 +138,5 @@ namespace ToneGenerator
         // Cosine ramp out: 0.5 + 0.5*cos(pi*sample/threshold)
         static float HannOut(int sample, int rampSamples) =>
             0.5f + 0.5f * (float)Math.Cos(Math.PI * sample / rampSamples);
-   }
+    }
 }
