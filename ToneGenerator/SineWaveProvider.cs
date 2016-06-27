@@ -43,11 +43,11 @@ namespace ToneGenerator
         /// <summary>
         /// Gets or sets the calibration of the output sound.
         /// </summary>
-        public Calibration2 LeftCalibration { get; set; } = new Calibration2(new Dictionary<float, float> { { 1000, 0 } });
+        public Calibration LeftCalibration { get; set; } = new Calibration(new Dictionary<float, float> { { 1000, 0 } });
         /// <summary>
         /// Gets or sets the calibration of the output sound.
         /// </summary>
-        public Calibration2 RightCalibration { get; set; } = new Calibration2(new Dictionary<float, float> { { 1000, 0 } });
+        public Calibration RightCalibration { get; set; } = new Calibration(new Dictionary<float, float> { { 1000, 0 } });
         public bool UseLoudnessInCalibration { get; set; }
 
         /// <summary>

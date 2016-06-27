@@ -3,65 +3,21 @@ using System.Linq;
 
 namespace ToneGenerator
 {
-    public class Calibration
-    {
-        public Calibration(List<float> frequencies, List<float> amplitudes)
-        {
-            Frequencies = frequencies;
-            AmplitudesDb = amplitudes;
-        }
-
-        public List<float> Frequencies { get; }
-        public List<float> AmplitudesDb { get; }
-
-        public float GetAmplitudeDb(float frequency)
-        {
-            int index = Frequencies.BinarySearch(frequency);
-            if (index >= 0)
-                return AmplitudesDb[index];
-            // Linear interpolation
-            int nextLargestIndex = ~index;
-            if (nextLargestIndex == 0)
-                return AmplitudesDb[0];
-            if (nextLargestIndex == Frequencies.Count)
-                return AmplitudesDb[AmplitudesDb.Count - 1];
-
-            float leftFreq = Frequencies[nextLargestIndex - 1];
-            float rightFreq = Frequencies[nextLargestIndex];
-            float t = (frequency - leftFreq) / (rightFreq - leftFreq);
-
-            return (1 - t) * AmplitudesDb[nextLargestIndex - 1]
-                + t * AmplitudesDb[nextLargestIndex];
-        }
-
-        public float GetCalibratedAmplitude(Soundtrack track, bool useLoudness = true)
-        {
-            // Loudness normalization: 120 dB -> 0 dBFS, 0 dB -> threshold
-            const float MaxDb = 120;
-            var thresholdDb = GetAmplitudeDb(track.Frequency);
-            var amplitudeDb = Utilities.MagToDb(track.Amplitude);
-            if (useLoudness)
-                amplitudeDb = -thresholdDb / MaxDb * (amplitudeDb - MaxDb);
-            else
-                amplitudeDb += thresholdDb;
-            return Utilities.DbToMag(amplitudeDb);
-        }
-    }
-
     /// <summary>
     /// A calibration class using a dictionary for frequencies and amplitudes.
     /// </summary>
-    public class Calibration2
+    public class Calibration
     {
+        const int MaxCacheSize = 100;
+
         private float minFrequency;
         private float maxFrequency;
         // Simple caching
-        private float lastFrequency;
-        private float lastAmplitudeDb;
+        private Dictionary<float, float> cache = new Dictionary<float, float>();
 
         public Dictionary<float, float> AmplitudesDb { get; set; }
 
-        public Calibration2(Dictionary<float, float> amplitudesDb)
+        public Calibration(Dictionary<float, float> amplitudesDb)
         {
             AmplitudesDb = amplitudesDb;
             if (amplitudesDb != null)
@@ -70,12 +26,7 @@ namespace ToneGenerator
                 maxFrequency = amplitudesDb.Keys.Max();
             }
         }
-
-        public static Calibration2 FromOldCalibration(Calibration calibration)
-        {
-            return new Calibration2(calibration.Frequencies.ToDictionary(f => f, f => calibration.GetAmplitudeDb(f)));
-        }
-
+        
         public float GetAmplitudeDb(float frequency)
         {
             if (frequency <= minFrequency)
@@ -84,8 +35,9 @@ namespace ToneGenerator
                 return AmplitudesDb[maxFrequency];
 
             // Simple caching, because this is going to be called over and over
-            if (frequency == lastFrequency)
-                return lastAmplitudeDb;
+            float result;
+            if (cache.TryGetValue(frequency, out result))
+                return result;
 
             var freqKeys = AmplitudesDb.Keys.Zip(AmplitudesDb.Keys.Skip(1), (a, b) => new { LowerKey = a, UpperKey = b })
                 .Where(x => x.LowerKey <= frequency && x.UpperKey >= frequency)
@@ -93,11 +45,13 @@ namespace ToneGenerator
 
             // Linear interpolation
             var t = (frequency - freqKeys.LowerKey) / (freqKeys.UpperKey - freqKeys.LowerKey);
-            var amplitudeDb = (1 - t) * AmplitudesDb[freqKeys.LowerKey]
+            result = (1 - t) * AmplitudesDb[freqKeys.LowerKey]
                 + t * AmplitudesDb[freqKeys.UpperKey];
-            lastFrequency = frequency;
-            lastAmplitudeDb = amplitudeDb;
-            return amplitudeDb;
+
+            if (cache.Count > MaxCacheSize)
+                cache.Clear();
+            cache[frequency] = result;
+            return result;
         }
 
         public float GetCalibratedAmplitude(Soundtrack track, bool useLoudness = true)
