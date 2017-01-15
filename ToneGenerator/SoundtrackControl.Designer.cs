@@ -45,6 +45,8 @@ namespace ToneGenerator
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.plusButton = new System.Windows.Forms.Button();
             this.minusButton = new System.Windows.Forms.Button();
+            this.plus2Button = new System.Windows.Forms.Button();
+            this.minus2Button = new System.Windows.Forms.Button();
             this.dBVolumeSlider = new ToneGenerator.VolumeSlider();
             ((System.ComponentModel.ISupportInitialize)(this.frequencyNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumePictureBox)).BeginInit();
@@ -57,7 +59,7 @@ namespace ToneGenerator
             this.rightCheckBox.Checked = true;
             this.rightCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rightCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.rightCheckBox.Location = new System.Drawing.Point(272, 67);
+            this.rightCheckBox.Location = new System.Drawing.Point(355, 67);
             this.rightCheckBox.Name = "rightCheckBox";
             this.rightCheckBox.Size = new System.Drawing.Size(60, 20);
             this.rightCheckBox.TabIndex = 26;
@@ -72,7 +74,7 @@ namespace ToneGenerator
             this.leftCheckBox.Checked = true;
             this.leftCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.leftCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.leftCheckBox.Location = new System.Drawing.Point(214, 67);
+            this.leftCheckBox.Location = new System.Drawing.Point(297, 67);
             this.leftCheckBox.Name = "leftCheckBox";
             this.leftCheckBox.Size = new System.Drawing.Size(52, 20);
             this.leftCheckBox.TabIndex = 25;
@@ -93,12 +95,11 @@ namespace ToneGenerator
             // 
             this.nextOctaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nextOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.nextOctaveButton.Location = new System.Drawing.Point(309, 9);
+            this.nextOctaveButton.Location = new System.Drawing.Point(388, 7);
             this.nextOctaveButton.Name = "nextOctaveButton";
-            this.nextOctaveButton.Size = new System.Drawing.Size(23, 23);
+            this.nextOctaveButton.Size = new System.Drawing.Size(27, 23);
             this.nextOctaveButton.TabIndex = 22;
-            this.nextOctaveButton.Text = ">>";
-            this.toolTip.SetToolTip(this.nextOctaveButton, "Go up an octave");
+            this.nextOctaveButton.Text = "x2";
             this.nextOctaveButton.UseVisualStyleBackColor = true;
             this.nextOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
@@ -106,12 +107,11 @@ namespace ToneGenerator
             // 
             this.prevOctaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.prevOctaveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.prevOctaveButton.Location = new System.Drawing.Point(286, 9);
+            this.prevOctaveButton.Location = new System.Drawing.Point(358, 7);
             this.prevOctaveButton.Name = "prevOctaveButton";
-            this.prevOctaveButton.Size = new System.Drawing.Size(23, 23);
+            this.prevOctaveButton.Size = new System.Drawing.Size(27, 23);
             this.prevOctaveButton.TabIndex = 21;
-            this.prevOctaveButton.Text = "<<";
-            this.toolTip.SetToolTip(this.prevOctaveButton, "Go down an octave");
+            this.prevOctaveButton.Text = "/2";
             this.prevOctaveButton.UseVisualStyleBackColor = true;
             this.prevOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
@@ -119,12 +119,11 @@ namespace ToneGenerator
             // 
             this.nextNoteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nextNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.nextNoteButton.Location = new System.Drawing.Point(254, 9);
+            this.nextNoteButton.Location = new System.Drawing.Point(262, 7);
             this.nextNoteButton.Name = "nextNoteButton";
-            this.nextNoteButton.Size = new System.Drawing.Size(23, 23);
+            this.nextNoteButton.Size = new System.Drawing.Size(27, 23);
             this.nextNoteButton.TabIndex = 20;
-            this.nextNoteButton.Text = ">";
-            this.toolTip.SetToolTip(this.nextNoteButton, "Go up a semitone");
+            this.nextNoteButton.Text = "+1";
             this.nextNoteButton.UseVisualStyleBackColor = true;
             this.nextNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
@@ -132,12 +131,11 @@ namespace ToneGenerator
             // 
             this.prevNoteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.prevNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.prevNoteButton.Location = new System.Drawing.Point(231, 9);
+            this.prevNoteButton.Location = new System.Drawing.Point(232, 7);
             this.prevNoteButton.Name = "prevNoteButton";
-            this.prevNoteButton.Size = new System.Drawing.Size(23, 23);
+            this.prevNoteButton.Size = new System.Drawing.Size(27, 23);
             this.prevNoteButton.TabIndex = 19;
-            this.prevNoteButton.Text = "<";
-            this.toolTip.SetToolTip(this.prevNoteButton, "Go down a semitone");
+            this.prevNoteButton.Text = "-1";
             this.prevNoteButton.UseVisualStyleBackColor = true;
             this.prevNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
@@ -167,7 +165,7 @@ namespace ToneGenerator
             0,
             131072});
             this.frequencyNumeric.Name = "frequencyNumeric";
-            this.frequencyNumeric.Size = new System.Drawing.Size(88, 23);
+            this.frequencyNumeric.Size = new System.Drawing.Size(81, 23);
             this.frequencyNumeric.TabIndex = 16;
             this.frequencyNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.frequencyNumeric.Value = new decimal(new int[] {
@@ -190,12 +188,11 @@ namespace ToneGenerator
             // 
             this.plusButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.plusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.plusButton.Location = new System.Drawing.Point(199, 9);
+            this.plusButton.Location = new System.Drawing.Point(199, 7);
             this.plusButton.Name = "plusButton";
-            this.plusButton.Size = new System.Drawing.Size(23, 23);
+            this.plusButton.Size = new System.Drawing.Size(27, 23);
             this.plusButton.TabIndex = 18;
-            this.plusButton.Text = "+";
-            this.toolTip.SetToolTip(this.plusButton, "Go up 50 cents");
+            this.plusButton.Text = "+.5";
             this.plusButton.UseVisualStyleBackColor = true;
             this.plusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
@@ -203,22 +200,47 @@ namespace ToneGenerator
             // 
             this.minusButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.minusButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.minusButton.Location = new System.Drawing.Point(176, 9);
+            this.minusButton.Location = new System.Drawing.Point(169, 7);
             this.minusButton.Name = "minusButton";
-            this.minusButton.Size = new System.Drawing.Size(23, 23);
+            this.minusButton.Size = new System.Drawing.Size(27, 23);
             this.minusButton.TabIndex = 17;
-            this.minusButton.Text = "-";
-            this.toolTip.SetToolTip(this.minusButton, "Go down 50 cents");
+            this.minusButton.Text = "-.5";
             this.minusButton.UseVisualStyleBackColor = true;
             this.minusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // plus2Button
+            // 
+            this.plus2Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.plus2Button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.plus2Button.Location = new System.Drawing.Point(325, 7);
+            this.plus2Button.Name = "plus2Button";
+            this.plus2Button.Size = new System.Drawing.Size(27, 23);
+            this.plus2Button.TabIndex = 29;
+            this.plus2Button.Text = "+2";
+            this.plus2Button.UseVisualStyleBackColor = true;
+            this.plus2Button.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            // 
+            // minus2Button
+            // 
+            this.minus2Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minus2Button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.minus2Button.Location = new System.Drawing.Point(295, 7);
+            this.minus2Button.Name = "minus2Button";
+            this.minus2Button.Size = new System.Drawing.Size(27, 23);
+            this.minus2Button.TabIndex = 28;
+            this.minus2Button.Text = "-2";
+            this.minus2Button.UseVisualStyleBackColor = true;
+            this.minus2Button.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
             // dBVolumeSlider
             // 
             this.dBVolumeSlider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dBVolumeSlider.Location = new System.Drawing.Point(36, 42);
+            this.dBVolumeSlider.MaximumDB = 20F;
+            this.dBVolumeSlider.MinimumDB = -20F;
             this.dBVolumeSlider.Name = "dBVolumeSlider";
-            this.dBVolumeSlider.Size = new System.Drawing.Size(296, 16);
+            this.dBVolumeSlider.Size = new System.Drawing.Size(379, 16);
             this.dBVolumeSlider.TabIndex = 27;
             this.toolTip.SetToolTip(this.dBVolumeSlider, "Controls the volume on a logarithmic scale.");
             this.dBVolumeSlider.Volume = 0.25F;
@@ -229,6 +251,8 @@ namespace ToneGenerator
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.plus2Button);
+            this.Controls.Add(this.minus2Button);
             this.Controls.Add(this.rightCheckBox);
             this.Controls.Add(this.leftCheckBox);
             this.Controls.Add(this.volumeLabel);
@@ -245,7 +269,7 @@ namespace ToneGenerator
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "SoundtrackControl";
-            this.Size = new System.Drawing.Size(340, 95);
+            this.Size = new System.Drawing.Size(423, 95);
             ((System.ComponentModel.ISupportInitialize)(this.frequencyNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumePictureBox)).EndInit();
             this.ResumeLayout(false);
@@ -269,5 +293,7 @@ namespace ToneGenerator
         private VolumeSlider dBVolumeSlider;
         private System.Windows.Forms.Button plusButton;
         private System.Windows.Forms.Button minusButton;
+        private System.Windows.Forms.Button plus2Button;
+        private System.Windows.Forms.Button minus2Button;
     }
 }

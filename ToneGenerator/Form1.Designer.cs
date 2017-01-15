@@ -40,6 +40,7 @@
             this.prevNoteButton = new System.Windows.Forms.Button();
             this.plusButton = new System.Windows.Forms.Button();
             this.minusButton = new System.Windows.Forms.Button();
+            this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.maxVolumeUpDown = new System.Windows.Forms.NumericUpDown();
@@ -61,7 +62,7 @@
             this.rightEarLabel = new System.Windows.Forms.Label();
             this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
             this.leftEarLabel = new System.Windows.Forms.Label();
-            this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
+            this.resetCalibrationButton = new System.Windows.Forms.Button();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).BeginInit();
@@ -84,7 +85,7 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Location = new System.Drawing.Point(165, 16);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(589, 25);
+            this.playButton.Size = new System.Drawing.Size(669, 25);
             this.playButton.TabIndex = 1;
             this.playButton.Text = "▶ ";
             this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -104,7 +105,7 @@
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomPanel.Location = new System.Drawing.Point(0, 336);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(754, 41);
+            this.bottomPanel.Size = new System.Drawing.Size(834, 41);
             this.bottomPanel.TabIndex = 17;
             // 
             // nextOctaveButton
@@ -173,6 +174,17 @@
             this.minusButton.UseVisualStyleBackColor = true;
             this.minusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
             // 
+            // masterVolumeSlider
+            // 
+            this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
+            this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
+            this.masterVolumeSlider.MaximumDB = 0F;
+            this.masterVolumeSlider.MinimumDB = -48F;
+            this.masterVolumeSlider.Name = "masterVolumeSlider";
+            this.masterVolumeSlider.Size = new System.Drawing.Size(834, 16);
+            this.masterVolumeSlider.TabIndex = 0;
+            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
+            // 
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
@@ -184,7 +196,7 @@
             this.tableLayoutPanel.RowCount = 2;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(754, 303);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(834, 303);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // panel1
@@ -205,7 +217,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(754, 33);
+            this.panel1.Size = new System.Drawing.Size(834, 33);
             this.panel1.TabIndex = 0;
             // 
             // maxVolumeUpDown
@@ -250,6 +262,7 @@
             // 
             // periodUpDown
             // 
+            this.periodUpDown.DecimalPlaces = 3;
             this.periodUpDown.Location = new System.Drawing.Point(696, 7);
             this.periodUpDown.Maximum = new decimal(new int[] {
             1000,
@@ -262,7 +275,7 @@
             0,
             0});
             this.periodUpDown.Name = "periodUpDown";
-            this.periodUpDown.Size = new System.Drawing.Size(50, 23);
+            this.periodUpDown.Size = new System.Drawing.Size(67, 23);
             this.periodUpDown.TabIndex = 10;
             this.periodUpDown.Value = new decimal(new int[] {
             200,
@@ -367,6 +380,7 @@
             // 
             // calibrationPanel
             // 
+            this.calibrationPanel.Controls.Add(this.resetCalibrationButton);
             this.calibrationPanel.Controls.Add(this.useLoudnessCheckBox);
             this.calibrationPanel.Controls.Add(this.calibrationRightBrowseButton);
             this.calibrationPanel.Controls.Add(this.calibrateLeftBrowseButton);
@@ -377,7 +391,7 @@
             this.calibrationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calibrationPanel.Location = new System.Drawing.Point(0, 33);
             this.calibrationPanel.Name = "calibrationPanel";
-            this.calibrationPanel.Size = new System.Drawing.Size(754, 303);
+            this.calibrationPanel.Size = new System.Drawing.Size(834, 303);
             this.calibrationPanel.TabIndex = 1;
             this.calibrationPanel.Visible = false;
             // 
@@ -397,7 +411,7 @@
             // 
             this.calibrationRightBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.calibrationRightBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrationRightBrowseButton.Location = new System.Drawing.Point(667, 35);
+            this.calibrationRightBrowseButton.Location = new System.Drawing.Point(747, 35);
             this.calibrationRightBrowseButton.Name = "calibrationRightBrowseButton";
             this.calibrationRightBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.calibrationRightBrowseButton.TabIndex = 5;
@@ -409,7 +423,7 @@
             // 
             this.calibrateLeftBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.calibrateLeftBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrateLeftBrowseButton.Location = new System.Drawing.Point(667, 6);
+            this.calibrateLeftBrowseButton.Location = new System.Drawing.Point(747, 6);
             this.calibrateLeftBrowseButton.Name = "calibrateLeftBrowseButton";
             this.calibrateLeftBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.calibrateLeftBrowseButton.TabIndex = 4;
@@ -424,7 +438,7 @@
             this.calibrationRightTextBox.Location = new System.Drawing.Point(75, 35);
             this.calibrationRightTextBox.Name = "calibrationRightTextBox";
             this.calibrationRightTextBox.ReadOnly = true;
-            this.calibrationRightTextBox.Size = new System.Drawing.Size(586, 23);
+            this.calibrationRightTextBox.Size = new System.Drawing.Size(666, 23);
             this.calibrationRightTextBox.TabIndex = 3;
             // 
             // rightEarLabel
@@ -443,7 +457,7 @@
             this.calibrationLeftTextBox.Location = new System.Drawing.Point(75, 6);
             this.calibrationLeftTextBox.Name = "calibrationLeftTextBox";
             this.calibrationLeftTextBox.ReadOnly = true;
-            this.calibrationLeftTextBox.Size = new System.Drawing.Size(586, 23);
+            this.calibrationLeftTextBox.Size = new System.Drawing.Size(666, 23);
             this.calibrationLeftTextBox.TabIndex = 1;
             // 
             // leftEarLabel
@@ -455,20 +469,21 @@
             this.leftEarLabel.TabIndex = 0;
             this.leftEarLabel.Text = "&Left ear:";
             // 
-            // masterVolumeSlider
+            // resetCalibrationButton
             // 
-            this.masterVolumeSlider.Dock = System.Windows.Forms.DockStyle.Top;
-            this.masterVolumeSlider.Location = new System.Drawing.Point(0, 0);
-            this.masterVolumeSlider.MaximumDB = 0F;
-            this.masterVolumeSlider.MinimumDB = -48F;
-            this.masterVolumeSlider.Name = "masterVolumeSlider";
-            this.masterVolumeSlider.Size = new System.Drawing.Size(754, 16);
-            this.masterVolumeSlider.TabIndex = 0;
-            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
+            this.resetCalibrationButton.AutoSize = true;
+            this.resetCalibrationButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.resetCalibrationButton.Location = new System.Drawing.Point(75, 90);
+            this.resetCalibrationButton.Name = "resetCalibrationButton";
+            this.resetCalibrationButton.Size = new System.Drawing.Size(108, 24);
+            this.resetCalibrationButton.TabIndex = 7;
+            this.resetCalibrationButton.Text = "R&eset calibration";
+            this.resetCalibrationButton.UseVisualStyleBackColor = true;
+            this.resetCalibrationButton.Click += new System.EventHandler(this.resetCalibrationButton_Click);
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(754, 377);
+            this.ClientSize = new System.Drawing.Size(834, 377);
             this.Controls.Add(this.calibrationPanel);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.bottomPanel);
@@ -476,7 +491,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(770, 214);
+            this.MinimumSize = new System.Drawing.Size(850, 214);
             this.Name = "Form1";
             this.Text = "Tone Generator";
             this.bottomPanel.ResumeLayout(false);
@@ -524,6 +539,7 @@
         private System.Windows.Forms.Button prevNoteButton;
         private System.Windows.Forms.Button plusButton;
         private System.Windows.Forms.Button minusButton;
+        private System.Windows.Forms.Button resetCalibrationButton;
     }
 }
 

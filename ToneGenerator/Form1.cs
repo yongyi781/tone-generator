@@ -17,6 +17,7 @@ namespace ToneGenerator
     {
         public const int DefaultLatency = 100;
         public const int NumSoundtracks = 6;
+        public const float DefaultAmplitude = 0.1f;
 
         private WaveOut waveOut;
         private SineWaveProvider sineWaveProvider;
@@ -239,6 +240,21 @@ namespace ToneGenerator
 
             foreach (var control in soundtrackControls)
                 control.MultiplyFrequency(factor);
+        }
+
+        private void resetCalibrationButton_Click(object sender, EventArgs e)
+        {
+            LoadCalibration(sineWaveProvider, Ear.Left, "calibration/none.json");
+            LoadCalibration(sineWaveProvider, Ear.Right, "calibration/none.json");
+            LoadCalibration(alternatingWaveProvider, Ear.Left, "calibration/none.json");
+            LoadCalibration(alternatingWaveProvider, Ear.Right, "calibration/none.json");
+            maxVolumeUpDown.Value = 0;
+            minVolumeUpDown.Value = -60;
+            useLoudnessCheckBox.Checked = false;
+            foreach (var st in soundtrackControls)
+            {
+                st.Amplitude = Math.Min(st.Amplitude, DefaultAmplitude);
+            }
         }
     }
 

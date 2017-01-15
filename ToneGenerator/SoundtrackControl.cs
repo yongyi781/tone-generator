@@ -13,13 +13,29 @@ namespace ToneGenerator
 
             frequencyNumeric.Maximum = SineWaveProvider.SAMPLE_RATE / 2M;
 
-            SetAmplitude(1f);
+            Amplitude = 1f;
             Soundtrack.Frequency = (float)frequencyNumeric.Value;
             Soundtrack.Left = leftCheckBox.Checked = play;
             Soundtrack.Right = rightCheckBox.Checked = play;
         }
 
         public Soundtrack Soundtrack { get; private set; } = new Soundtrack();
+
+        public float Amplitude
+        {
+            get => Soundtrack.Amplitude;
+            set
+            {
+                if (value < 0.0f)
+                    value = 0.0f;
+                if (value != Amplitude)
+                {
+                    volumeLabel.Text = "Amplitude: " + value;
+                    Soundtrack.Amplitude = value;
+                    dBVolumeSlider.Volume = value;
+                }
+            }
+        }
 
         public void SetMinimumVolume(float minVolume)
         {
@@ -30,16 +46,7 @@ namespace ToneGenerator
         {
             dBVolumeSlider.MaximumDB = maxVolume;
         }
-
-        public void SetAmplitude(float volume)
-        {
-            if (volume < 0.0f)
-                volume = 0.0f;
-            volumeLabel.Text = "Amplitude: " + volume;
-            Soundtrack.Amplitude = volume;
-            dBVolumeSlider.Volume = volume;
-        }
-
+        
         public void SetLeft(bool value)
         {
             Soundtrack.Left = leftCheckBox.Checked = value;
@@ -76,7 +83,7 @@ namespace ToneGenerator
                     logVolume -= 0.05f;
                 else if (keyData == Keys.Add)
                     logVolume += 0.05f;
-                SetAmplitude((float)Math.Pow(10, logVolume));
+                Amplitude = (float)Math.Pow(10, logVolume);
                 return true;
             }
 
@@ -93,6 +100,12 @@ namespace ToneGenerator
                     return true;
                 case Keys.OemPeriod:
                     MultiplyFrequency(GetFrequencyIncrement());
+                    return true;
+                case Keys.OemSemicolon:
+                    MultiplyFrequency(1.0 / GetDoubleFrequencyIncrement());
+                    return true;
+                case Keys.OemQuotes:
+                    MultiplyFrequency(GetDoubleFrequencyIncrement());
                     return true;
                 case Keys.OemOpenBrackets:
                     MultiplyFrequency(0.5);
@@ -112,6 +125,12 @@ namespace ToneGenerator
             return parent == null ? Math.Pow(2.0, 1.0 / 12) : parent.FrequencyIncrement;
         }
 
+        private double GetDoubleFrequencyIncrement()
+        {
+            var x= GetFrequencyIncrement();
+            return x * x;
+        }
+
         private double GetHalfFrequencyIncrement()
         {
             return Math.Sqrt(GetFrequencyIncrement());
@@ -119,7 +138,7 @@ namespace ToneGenerator
 
         private void dBVolumeSlider_VolumeChanged(object sender, EventArgs e)
         {
-            SetAmplitude(dBVolumeSlider.Volume);
+            Amplitude = dBVolumeSlider.Volume;
         }
 
         private void frequencyNumeric_ValueChanged(object sender, EventArgs e)
@@ -137,6 +156,10 @@ namespace ToneGenerator
                 MultiplyFrequency(1.0 / GetFrequencyIncrement());
             else if (sender == nextNoteButton)
                 MultiplyFrequency(GetFrequencyIncrement());
+            else if (sender == minus2Button)
+                MultiplyFrequency(1.0 / GetDoubleFrequencyIncrement());
+            else if (sender == plus2Button)
+                MultiplyFrequency(GetDoubleFrequencyIncrement());
             else if (sender == prevOctaveButton)
                 MultiplyFrequency(0.5);
             else if (sender == nextOctaveButton)
