@@ -45,7 +45,7 @@ namespace ToneGenerator
             }
         }
 
-        private float minimumDB = -20f;
+        private float minimumDB = -60;
         /// <summary>
         /// Gets or sets the minimum decibel volume for the control.
         /// </summary>
@@ -59,7 +59,7 @@ namespace ToneGenerator
             }
         }
 
-        private float maximumDB = 20f;
+        private float maximumDB = 0;
         /// <summary>
         /// Gets or sets the minimum decibel volume for the control.
         /// </summary>

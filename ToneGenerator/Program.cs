@@ -11,7 +11,6 @@ namespace ToneGenerator
 		[STAThread]
 		static void Main(string[] args)
 		{
-			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
             int desiredLatency = Form1.DefaultLatency;

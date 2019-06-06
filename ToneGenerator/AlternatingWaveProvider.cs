@@ -15,11 +15,12 @@ namespace ToneGenerator
 
         public double Period { get; set; }
         // Tone duration in seconds.
-        public double ToneDuration { get { return Period / 2; } }
+        public double ToneDuration { get { return Period; } }
         public int ToneSamples { get { return (int)(SAMPLE_RATE * ToneDuration); } }
 
         // 0 if left side is being played, 1 if right side.
         public int CurrentSoundtrackIndex { get; set; }
+        public double DutyCycle { get; set; } = 0.5;
 
         public override int Read(float[] buffer, int offset, int sampleCount)
         {
@@ -44,7 +45,9 @@ namespace ToneGenerator
 
                     ++Sample;
                     if (Sample % ToneSamples == 0)
-                        SetSoundtrackIndex((Sample % (2 * ToneSamples)) / ToneSamples);
+                        SetSoundtrackIndex(0);
+                    else if (Sample % ToneSamples == (int)((1 - DutyCycle) * ToneSamples))
+                        SetSoundtrackIndex(1);
                 }
             }
             else

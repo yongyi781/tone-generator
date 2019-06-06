@@ -55,6 +55,7 @@
             this.divisionTonesUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisionTonesLabel = new System.Windows.Forms.Label();
             this.calibrationPanel = new System.Windows.Forms.Panel();
+            this.resetCalibrationButton = new System.Windows.Forms.Button();
             this.useLoudnessCheckBox = new System.Windows.Forms.CheckBox();
             this.calibrationRightBrowseButton = new System.Windows.Forms.Button();
             this.calibrateLeftBrowseButton = new System.Windows.Forms.Button();
@@ -62,7 +63,8 @@
             this.rightEarLabel = new System.Windows.Forms.Label();
             this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
             this.leftEarLabel = new System.Windows.Forms.Label();
-            this.resetCalibrationButton = new System.Windows.Forms.Button();
+            this.dutyCycleUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dutyCycleLabel = new System.Windows.Forms.Label();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).BeginInit();
@@ -70,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.minVolumeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).BeginInit();
             this.calibrationPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // playButton
@@ -85,12 +88,12 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Location = new System.Drawing.Point(165, 16);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(669, 25);
+            this.playButton.Size = new System.Drawing.Size(785, 25);
             this.playButton.TabIndex = 1;
             this.playButton.Text = "▶ ";
             this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.CheckedChanged += new System.EventHandler(this.playButton_CheckedChanged);
+            this.playButton.CheckedChanged += new System.EventHandler(this.PlayButton_CheckedChanged);
             // 
             // bottomPanel
             // 
@@ -105,7 +108,7 @@
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomPanel.Location = new System.Drawing.Point(0, 336);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(834, 41);
+            this.bottomPanel.Size = new System.Drawing.Size(950, 41);
             this.bottomPanel.TabIndex = 17;
             // 
             // nextOctaveButton
@@ -117,7 +120,7 @@
             this.nextOctaveButton.TabIndex = 28;
             this.nextOctaveButton.Text = ">>";
             this.nextOctaveButton.UseVisualStyleBackColor = true;
-            this.nextOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.nextOctaveButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // prevOctaveButton
             // 
@@ -128,7 +131,7 @@
             this.prevOctaveButton.TabIndex = 27;
             this.prevOctaveButton.Text = "<<";
             this.prevOctaveButton.UseVisualStyleBackColor = true;
-            this.prevOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.prevOctaveButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // nextNoteButton
             // 
@@ -139,7 +142,7 @@
             this.nextNoteButton.TabIndex = 26;
             this.nextNoteButton.Text = ">";
             this.nextNoteButton.UseVisualStyleBackColor = true;
-            this.nextNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.nextNoteButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // prevNoteButton
             // 
@@ -150,7 +153,7 @@
             this.prevNoteButton.TabIndex = 25;
             this.prevNoteButton.Text = "<";
             this.prevNoteButton.UseVisualStyleBackColor = true;
-            this.prevNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.prevNoteButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // plusButton
             // 
@@ -161,7 +164,7 @@
             this.plusButton.TabIndex = 24;
             this.plusButton.Text = "+";
             this.plusButton.UseVisualStyleBackColor = true;
-            this.plusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.plusButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // minusButton
             // 
@@ -172,7 +175,7 @@
             this.minusButton.TabIndex = 23;
             this.minusButton.Text = "-";
             this.minusButton.UseVisualStyleBackColor = true;
-            this.minusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.minusButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // masterVolumeSlider
             // 
@@ -181,9 +184,9 @@
             this.masterVolumeSlider.MaximumDB = 0F;
             this.masterVolumeSlider.MinimumDB = -48F;
             this.masterVolumeSlider.Name = "masterVolumeSlider";
-            this.masterVolumeSlider.Size = new System.Drawing.Size(834, 16);
+            this.masterVolumeSlider.Size = new System.Drawing.Size(950, 16);
             this.masterVolumeSlider.TabIndex = 0;
-            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.masterVolumeSlider_VolumeChanged);
+            this.masterVolumeSlider.VolumeChanged += new System.EventHandler(this.MasterVolumeSlider_VolumeChanged);
             // 
             // tableLayoutPanel
             // 
@@ -196,13 +199,15 @@
             this.tableLayoutPanel.RowCount = 2;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(834, 303);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(950, 303);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.dutyCycleUpDown);
+            this.panel1.Controls.Add(this.dutyCycleLabel);
             this.panel1.Controls.Add(this.maxVolumeUpDown);
             this.panel1.Controls.Add(this.maxVolumeLabel);
             this.panel1.Controls.Add(this.calibrateButton);
@@ -217,7 +222,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(834, 33);
+            this.panel1.Size = new System.Drawing.Size(950, 33);
             this.panel1.TabIndex = 0;
             // 
             // maxVolumeUpDown
@@ -231,19 +236,14 @@
             this.maxVolumeUpDown.Name = "maxVolumeUpDown";
             this.maxVolumeUpDown.Size = new System.Drawing.Size(50, 23);
             this.maxVolumeUpDown.TabIndex = 5;
-            this.maxVolumeUpDown.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.maxVolumeUpDown.ValueChanged += new System.EventHandler(this.minMaxVolumeUpDown_ValueChanged);
+            this.maxVolumeUpDown.ValueChanged += new System.EventHandler(this.MinMaxVolumeUpDown_ValueChanged);
             // 
             // maxVolumeLabel
             // 
             this.maxVolumeLabel.AutoSize = true;
             this.maxVolumeLabel.Location = new System.Drawing.Point(247, 9);
             this.maxVolumeLabel.Name = "maxVolumeLabel";
-            this.maxVolumeLabel.Size = new System.Drawing.Size(32, 15);
+            this.maxVolumeLabel.Size = new System.Drawing.Size(33, 15);
             this.maxVolumeLabel.TabIndex = 4;
             this.maxVolumeLabel.Text = "&Max:";
             // 
@@ -258,14 +258,14 @@
             this.calibrateButton.Text = "&Calibrate";
             this.calibrateButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.calibrateButton.UseVisualStyleBackColor = true;
-            this.calibrateButton.CheckedChanged += new System.EventHandler(this.calibrateButton_CheckedChanged);
+            this.calibrateButton.CheckedChanged += new System.EventHandler(this.CalibrateButton_CheckedChanged);
             // 
             // periodUpDown
             // 
             this.periodUpDown.DecimalPlaces = 3;
             this.periodUpDown.Location = new System.Drawing.Point(696, 7);
             this.periodUpDown.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -282,7 +282,7 @@
             0,
             0,
             0});
-            this.periodUpDown.ValueChanged += new System.EventHandler(this.periodUpDown_ValueChanged);
+            this.periodUpDown.ValueChanged += new System.EventHandler(this.PeriodUpDown_ValueChanged);
             // 
             // periodLabel
             // 
@@ -304,7 +304,7 @@
             this.modeComboBox.Name = "modeComboBox";
             this.modeComboBox.Size = new System.Drawing.Size(136, 23);
             this.modeComboBox.TabIndex = 8;
-            this.modeComboBox.SelectedIndexChanged += new System.EventHandler(this.modeComboBox_SelectedIndexChanged);
+            this.modeComboBox.SelectedIndexChanged += new System.EventHandler(this.ModeComboBox_SelectedIndexChanged);
             // 
             // modeLabel
             // 
@@ -332,11 +332,11 @@
             this.minVolumeUpDown.Size = new System.Drawing.Size(50, 23);
             this.minVolumeUpDown.TabIndex = 3;
             this.minVolumeUpDown.Value = new decimal(new int[] {
-            20,
+            60,
             0,
             0,
             -2147483648});
-            this.minVolumeUpDown.ValueChanged += new System.EventHandler(this.minMaxVolumeUpDown_ValueChanged);
+            this.minVolumeUpDown.ValueChanged += new System.EventHandler(this.MinMaxVolumeUpDown_ValueChanged);
             // 
             // minVolumeLabel
             // 
@@ -391,9 +391,21 @@
             this.calibrationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calibrationPanel.Location = new System.Drawing.Point(0, 33);
             this.calibrationPanel.Name = "calibrationPanel";
-            this.calibrationPanel.Size = new System.Drawing.Size(834, 303);
+            this.calibrationPanel.Size = new System.Drawing.Size(950, 303);
             this.calibrationPanel.TabIndex = 1;
             this.calibrationPanel.Visible = false;
+            // 
+            // resetCalibrationButton
+            // 
+            this.resetCalibrationButton.AutoSize = true;
+            this.resetCalibrationButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.resetCalibrationButton.Location = new System.Drawing.Point(75, 90);
+            this.resetCalibrationButton.Name = "resetCalibrationButton";
+            this.resetCalibrationButton.Size = new System.Drawing.Size(112, 24);
+            this.resetCalibrationButton.TabIndex = 7;
+            this.resetCalibrationButton.Text = "R&eset calibration";
+            this.resetCalibrationButton.UseVisualStyleBackColor = true;
+            this.resetCalibrationButton.Click += new System.EventHandler(this.ResetCalibrationButton_Click);
             // 
             // useLoudnessCheckBox
             // 
@@ -405,31 +417,31 @@
             this.useLoudnessCheckBox.TabIndex = 6;
             this.useLoudnessCheckBox.Text = "&Use Loudness (maps 120 dB to 0 dBFS)";
             this.useLoudnessCheckBox.UseVisualStyleBackColor = true;
-            this.useLoudnessCheckBox.CheckedChanged += new System.EventHandler(this.useLoudnessCheckBox_CheckedChanged);
+            this.useLoudnessCheckBox.CheckedChanged += new System.EventHandler(this.UseLoudnessCheckBox_CheckedChanged);
             // 
             // calibrationRightBrowseButton
             // 
             this.calibrationRightBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.calibrationRightBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrationRightBrowseButton.Location = new System.Drawing.Point(747, 35);
+            this.calibrationRightBrowseButton.Location = new System.Drawing.Point(863, 35);
             this.calibrationRightBrowseButton.Name = "calibrationRightBrowseButton";
             this.calibrationRightBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.calibrationRightBrowseButton.TabIndex = 5;
             this.calibrationRightBrowseButton.Text = "&Browse...";
             this.calibrationRightBrowseButton.UseVisualStyleBackColor = true;
-            this.calibrationRightBrowseButton.Click += new System.EventHandler(this.calibrateBrowseButton_Click);
+            this.calibrationRightBrowseButton.Click += new System.EventHandler(this.CalibrateBrowseButton_Click);
             // 
             // calibrateLeftBrowseButton
             // 
             this.calibrateLeftBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.calibrateLeftBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.calibrateLeftBrowseButton.Location = new System.Drawing.Point(747, 6);
+            this.calibrateLeftBrowseButton.Location = new System.Drawing.Point(863, 6);
             this.calibrateLeftBrowseButton.Name = "calibrateLeftBrowseButton";
             this.calibrateLeftBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.calibrateLeftBrowseButton.TabIndex = 4;
             this.calibrateLeftBrowseButton.Text = "&Browse...";
             this.calibrateLeftBrowseButton.UseVisualStyleBackColor = true;
-            this.calibrateLeftBrowseButton.Click += new System.EventHandler(this.calibrateBrowseButton_Click);
+            this.calibrateLeftBrowseButton.Click += new System.EventHandler(this.CalibrateBrowseButton_Click);
             // 
             // calibrationRightTextBox
             // 
@@ -438,7 +450,7 @@
             this.calibrationRightTextBox.Location = new System.Drawing.Point(75, 35);
             this.calibrationRightTextBox.Name = "calibrationRightTextBox";
             this.calibrationRightTextBox.ReadOnly = true;
-            this.calibrationRightTextBox.Size = new System.Drawing.Size(666, 23);
+            this.calibrationRightTextBox.Size = new System.Drawing.Size(782, 23);
             this.calibrationRightTextBox.TabIndex = 3;
             // 
             // rightEarLabel
@@ -457,7 +469,7 @@
             this.calibrationLeftTextBox.Location = new System.Drawing.Point(75, 6);
             this.calibrationLeftTextBox.Name = "calibrationLeftTextBox";
             this.calibrationLeftTextBox.ReadOnly = true;
-            this.calibrationLeftTextBox.Size = new System.Drawing.Size(666, 23);
+            this.calibrationLeftTextBox.Size = new System.Drawing.Size(782, 23);
             this.calibrationLeftTextBox.TabIndex = 1;
             // 
             // leftEarLabel
@@ -469,21 +481,44 @@
             this.leftEarLabel.TabIndex = 0;
             this.leftEarLabel.Text = "&Left ear:";
             // 
-            // resetCalibrationButton
+            // dutyCycleUpDown
             // 
-            this.resetCalibrationButton.AutoSize = true;
-            this.resetCalibrationButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.resetCalibrationButton.Location = new System.Drawing.Point(75, 90);
-            this.resetCalibrationButton.Name = "resetCalibrationButton";
-            this.resetCalibrationButton.Size = new System.Drawing.Size(108, 24);
-            this.resetCalibrationButton.TabIndex = 7;
-            this.resetCalibrationButton.Text = "R&eset calibration";
-            this.resetCalibrationButton.UseVisualStyleBackColor = true;
-            this.resetCalibrationButton.Click += new System.EventHandler(this.resetCalibrationButton_Click);
+            this.dutyCycleUpDown.DecimalPlaces = 3;
+            this.dutyCycleUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.dutyCycleUpDown.Location = new System.Drawing.Point(840, 7);
+            this.dutyCycleUpDown.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.dutyCycleUpDown.Name = "dutyCycleUpDown";
+            this.dutyCycleUpDown.Size = new System.Drawing.Size(67, 23);
+            this.dutyCycleUpDown.TabIndex = 12;
+            this.dutyCycleUpDown.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.dutyCycleUpDown.ValueChanged += new System.EventHandler(this.DutyCycleUpDown_ValueChanged);
+            // 
+            // dutyCycleLabel
+            // 
+            this.dutyCycleLabel.AutoSize = true;
+            this.dutyCycleLabel.Location = new System.Drawing.Point(769, 9);
+            this.dutyCycleLabel.Name = "dutyCycleLabel";
+            this.dutyCycleLabel.Size = new System.Drawing.Size(65, 15);
+            this.dutyCycleLabel.TabIndex = 11;
+            this.dutyCycleLabel.Text = "&Duty cycle:";
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(834, 377);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(950, 377);
             this.Controls.Add(this.calibrationPanel);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.bottomPanel);
@@ -491,7 +526,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(850, 214);
+            this.MinimumSize = new System.Drawing.Size(848, 208);
             this.Name = "Form1";
             this.Text = "Tone Generator";
             this.bottomPanel.ResumeLayout(false);
@@ -503,6 +538,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).EndInit();
             this.calibrationPanel.ResumeLayout(false);
             this.calibrationPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -521,7 +557,6 @@
         private System.Windows.Forms.Label modeLabel;
         private System.Windows.Forms.ComboBox modeComboBox;
         private System.Windows.Forms.NumericUpDown periodUpDown;
-        private System.Windows.Forms.Label periodLabel;
         private System.Windows.Forms.Panel calibrationPanel;
         private System.Windows.Forms.CheckBox calibrateButton;
         private System.Windows.Forms.NumericUpDown maxVolumeUpDown;
@@ -540,6 +575,9 @@
         private System.Windows.Forms.Button plusButton;
         private System.Windows.Forms.Button minusButton;
         private System.Windows.Forms.Button resetCalibrationButton;
+        private System.Windows.Forms.NumericUpDown dutyCycleUpDown;
+        private System.Windows.Forms.Label periodLabel;
+        private System.Windows.Forms.Label dutyCycleLabel;
     }
 }
 

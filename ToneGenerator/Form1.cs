@@ -17,13 +17,13 @@ namespace ToneGenerator
     {
         public const int DefaultLatency = 100;
         public const int NumSoundtracks = 6;
-        public const float DefaultAmplitude = 0.1f;
+        public const float DefaultAmplitude = 0.01f;
 
-        private WaveOut waveOut;
-        private SineWaveProvider sineWaveProvider;
-        private AlternatingWaveProvider alternatingWaveProvider;
+        private readonly WaveOut waveOut;
+        private readonly SineWaveProvider sineWaveProvider;
+        private readonly AlternatingWaveProvider alternatingWaveProvider;
 
-        private List<SoundtrackControl> soundtrackControls = new List<SoundtrackControl>();
+        private readonly List<SoundtrackControl> soundtrackControls = new List<SoundtrackControl>();
 
         [CLSCompliant(false)]
         public SineWaveProvider CurrentWaveProvider { get; set; }
@@ -34,16 +34,21 @@ namespace ToneGenerator
         public Form1(int desiredLatency = DefaultLatency)
         {
             InitializeComponent();
-            waveOut = new WaveOut(Handle);
-            waveOut.DesiredLatency = desiredLatency;
-            waveOut.Volume = 1;
+            waveOut = new WaveOut(Handle)
+            {
+                DesiredLatency = desiredLatency,
+                Volume = 1
+            };
             sineWaveProvider = new SineWaveProvider();
             alternatingWaveProvider = new AlternatingWaveProvider((double)periodUpDown.Value / 1000);
 
             for (int i = 0; i < NumSoundtracks; i++)
             {
-                var control = new SoundtrackControl(i == 0);
-                control.Dock = DockStyle.Top;
+                var control = new SoundtrackControl(i == 0)
+                {
+                    Amplitude = Utilities.DbToMag(-40),
+                    Dock = DockStyle.Top
+                };
                 soundtrackControls.Add(control);
                 tableLayoutPanel.Controls.Add(control);
                 sineWaveProvider.Soundtracks.Add(control.Soundtrack);
@@ -51,14 +56,14 @@ namespace ToneGenerator
             }
             
             modeComboBox.SelectedIndex = 0;
-            LoadCalibration(sineWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
-            LoadCalibration(sineWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
-            LoadCalibration(alternatingWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
-            LoadCalibration(alternatingWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
+            //LoadCalibration(sineWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
+            //LoadCalibration(sineWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
+            //LoadCalibration(alternatingWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
+            //LoadCalibration(alternatingWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
 
             // Use loudness by default
-            useLoudnessCheckBox.Checked = true;
-            maxVolumeUpDown.Value = 120;
+            //useLoudnessCheckBox.Checked = true;
+            //maxVolumeUpDown.Value = 120;
         }
 
         public double FrequencyIncrement
@@ -152,17 +157,17 @@ namespace ToneGenerator
                 waveProvider.RightCalibration = newCalibration;
         }
 
-        private void playButton_CheckedChanged(object sender, EventArgs e)
+        private void PlayButton_CheckedChanged(object sender, EventArgs e)
         {
             StartStopSineWave(playButton.Checked);
         }
 
-        private void masterVolumeSlider_VolumeChanged(object sender, EventArgs e)
+        private void MasterVolumeSlider_VolumeChanged(object sender, EventArgs e)
         {
             waveOut.Volume = masterVolumeSlider.Volume;
         }
 
-        private void minMaxVolumeUpDown_ValueChanged(object sender, EventArgs e)
+        private void MinMaxVolumeUpDown_ValueChanged(object sender, EventArgs e)
         {
             foreach (var soundtrackControl in soundtrackControls)
             {
@@ -172,13 +177,12 @@ namespace ToneGenerator
             masterVolumeSlider.MinimumDB = (float)minVolumeUpDown.Value;
         }
 
-        private void modeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (modeComboBox.SelectedIndex)
             {
                 case 0:
                     SetWaveProvider(sineWaveProvider);
-                    periodLabel.Visible = periodUpDown.Visible = false;
                     break;
                 case 1:
                     SetWaveProvider(alternatingWaveProvider);
@@ -187,20 +191,21 @@ namespace ToneGenerator
                 default:
                     break;
             }
+            periodLabel.Visible = periodUpDown.Visible = dutyCycleLabel.Visible = dutyCycleUpDown.Visible = modeComboBox.SelectedIndex == 1;
         }
 
-        private void periodUpDown_ValueChanged(object sender, EventArgs e)
+        private void PeriodUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (alternatingWaveProvider != null)
                 alternatingWaveProvider.Period = (double)periodUpDown.Value / 1000;
         }
 
-        private void calibrateButton_CheckedChanged(object sender, EventArgs e)
+        private void CalibrateButton_CheckedChanged(object sender, EventArgs e)
         {
             calibrationPanel.Visible = calibrateButton.Checked;
         }
 
-        private void calibrateBrowseButton_Click(object sender, EventArgs e)
+        private void CalibrateBrowseButton_Click(object sender, EventArgs e)
         {
             var ear = sender == calibrateLeftBrowseButton ? Ear.Left : Ear.Right;
             using (var ofd = new OpenFileDialog
@@ -217,12 +222,12 @@ namespace ToneGenerator
             }
         }
 
-        private void useLoudnessCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void UseLoudnessCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             sineWaveProvider.UseLoudnessInCalibration = alternatingWaveProvider.UseLoudnessInCalibration = useLoudnessCheckBox.Checked;
         }
 
-        private void changeFrequencyButtons_Click(object sender, EventArgs e)
+        private void ChangeFrequencyButtons_Click(object sender, EventArgs e)
         {
             var factor = 1.0;
             if (sender == minusButton)
@@ -242,7 +247,7 @@ namespace ToneGenerator
                 control.MultiplyFrequency(factor);
         }
 
-        private void resetCalibrationButton_Click(object sender, EventArgs e)
+        private void ResetCalibrationButton_Click(object sender, EventArgs e)
         {
             LoadCalibration(sineWaveProvider, Ear.Left, "calibration/none.json");
             LoadCalibration(sineWaveProvider, Ear.Right, "calibration/none.json");
@@ -255,6 +260,12 @@ namespace ToneGenerator
             {
                 st.Amplitude = Math.Min(st.Amplitude, DefaultAmplitude);
             }
+        }
+
+        private void DutyCycleUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (alternatingWaveProvider != null)
+                alternatingWaveProvider.DutyCycle = (double)dutyCycleUpDown.Value;
         }
     }
 

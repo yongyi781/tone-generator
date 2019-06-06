@@ -159,3 +159,4 @@ $RECYCLE.BIN/
 *.ide
 
 packages/
+/.vs
