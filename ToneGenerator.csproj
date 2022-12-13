@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>sine_wave.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="sine_wave.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NAudio.WinForms" Version="2.1.0" />
