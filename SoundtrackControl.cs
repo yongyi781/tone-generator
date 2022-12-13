@@ -121,8 +121,7 @@ namespace ToneGenerator
 
         private double GetFrequencyIncrement()
         {
-            Form1 parent = ParentForm as Form1;
-            return parent == null ? Math.Pow(2.0, 1.0 / 12) : parent.FrequencyIncrement;
+            return ParentForm is not Form1 parent ? Math.Pow(2.0, 1.0 / 12) : parent.FrequencyIncrement;
         }
 
         private double GetDoubleFrequencyIncrement()

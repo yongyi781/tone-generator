@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToneGenerator", "ToneGenerator\ToneGenerator.csproj", "{6ED8E6BD-9E1B-4BBD-A524-B16C14D1F821}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToneGenerator", "ToneGenerator.csproj", "{B84A526A-79FA-4336-BEDF-575172690103}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6ED8E6BD-9E1B-4BBD-A524-B16C14D1F821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6ED8E6BD-9E1B-4BBD-A524-B16C14D1F821}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6ED8E6BD-9E1B-4BBD-A524-B16C14D1F821}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6ED8E6BD-9E1B-4BBD-A524-B16C14D1F821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B84A526A-79FA-4336-BEDF-575172690103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84A526A-79FA-4336-BEDF-575172690103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84A526A-79FA-4336-BEDF-575172690103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84A526A-79FA-4336-BEDF-575172690103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {729CBAA3-9CF7-4A40-ADEA-C7EDECE4A6EB}
 	EndGlobalSection
 EndGlobal

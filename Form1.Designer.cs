@@ -43,6 +43,8 @@
             this.masterVolumeSlider = new ToneGenerator.VolumeSlider();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dutyCycleUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dutyCycleLabel = new System.Windows.Forms.Label();
             this.maxVolumeUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxVolumeLabel = new System.Windows.Forms.Label();
             this.calibrateButton = new System.Windows.Forms.CheckBox();
@@ -63,16 +65,14 @@
             this.rightEarLabel = new System.Windows.Forms.Label();
             this.calibrationLeftTextBox = new System.Windows.Forms.TextBox();
             this.leftEarLabel = new System.Windows.Forms.Label();
-            this.dutyCycleUpDown = new System.Windows.Forms.NumericUpDown();
-            this.dutyCycleLabel = new System.Windows.Forms.Label();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.periodUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minVolumeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).BeginInit();
             this.calibrationPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // playButton
@@ -225,6 +225,39 @@
             this.panel1.Size = new System.Drawing.Size(950, 33);
             this.panel1.TabIndex = 0;
             // 
+            // dutyCycleUpDown
+            // 
+            this.dutyCycleUpDown.DecimalPlaces = 3;
+            this.dutyCycleUpDown.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            196608});
+            this.dutyCycleUpDown.Location = new System.Drawing.Point(840, 7);
+            this.dutyCycleUpDown.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.dutyCycleUpDown.Name = "dutyCycleUpDown";
+            this.dutyCycleUpDown.Size = new System.Drawing.Size(67, 23);
+            this.dutyCycleUpDown.TabIndex = 12;
+            this.dutyCycleUpDown.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.dutyCycleUpDown.ValueChanged += new System.EventHandler(this.DutyCycleUpDown_ValueChanged);
+            // 
+            // dutyCycleLabel
+            // 
+            this.dutyCycleLabel.AutoSize = true;
+            this.dutyCycleLabel.Location = new System.Drawing.Point(769, 9);
+            this.dutyCycleLabel.Name = "dutyCycleLabel";
+            this.dutyCycleLabel.Size = new System.Drawing.Size(65, 15);
+            this.dutyCycleLabel.TabIndex = 11;
+            this.dutyCycleLabel.Text = "&Duty cycle:";
+            // 
             // maxVolumeUpDown
             // 
             this.maxVolumeUpDown.Location = new System.Drawing.Point(281, 7);
@@ -278,7 +311,7 @@
             this.periodUpDown.Size = new System.Drawing.Size(67, 23);
             this.periodUpDown.TabIndex = 10;
             this.periodUpDown.Value = new decimal(new int[] {
-            200,
+            600,
             0,
             0,
             0});
@@ -318,11 +351,6 @@
             // minVolumeUpDown
             // 
             this.minVolumeUpDown.Location = new System.Drawing.Point(191, 7);
-            this.minVolumeUpDown.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.minVolumeUpDown.Minimum = new decimal(new int[] {
             900,
             0,
@@ -481,39 +509,6 @@
             this.leftEarLabel.TabIndex = 0;
             this.leftEarLabel.Text = "&Left ear:";
             // 
-            // dutyCycleUpDown
-            // 
-            this.dutyCycleUpDown.DecimalPlaces = 3;
-            this.dutyCycleUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.dutyCycleUpDown.Location = new System.Drawing.Point(840, 7);
-            this.dutyCycleUpDown.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.dutyCycleUpDown.Name = "dutyCycleUpDown";
-            this.dutyCycleUpDown.Size = new System.Drawing.Size(67, 23);
-            this.dutyCycleUpDown.TabIndex = 12;
-            this.dutyCycleUpDown.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.dutyCycleUpDown.ValueChanged += new System.EventHandler(this.DutyCycleUpDown_ValueChanged);
-            // 
-            // dutyCycleLabel
-            // 
-            this.dutyCycleLabel.AutoSize = true;
-            this.dutyCycleLabel.Location = new System.Drawing.Point(769, 9);
-            this.dutyCycleLabel.Name = "dutyCycleLabel";
-            this.dutyCycleLabel.Size = new System.Drawing.Size(65, 15);
-            this.dutyCycleLabel.TabIndex = 11;
-            this.dutyCycleLabel.Text = "&Duty cycle:";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -532,13 +527,13 @@
             this.bottomPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVolumeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.periodUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minVolumeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divisionTonesUpDown)).EndInit();
             this.calibrationPanel.ResumeLayout(false);
             this.calibrationPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dutyCycleUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -10,10 +10,10 @@ namespace ToneGenerator
     {
         const int MaxCacheSize = 100;
 
-        private float minFrequency;
-        private float maxFrequency;
+        private readonly float minFrequency;
+        private readonly float maxFrequency;
         // Simple caching
-        private Dictionary<float, float> cache = new Dictionary<float, float>();
+        private Dictionary<float, float> cache = new();
 
         public Dictionary<float, float> AmplitudesDb { get; set; }
 
@@ -35,8 +35,7 @@ namespace ToneGenerator
                 return AmplitudesDb[maxFrequency];
 
             // Simple caching, because this is going to be called over and over
-            float result;
-            if (cache.TryGetValue(frequency, out result))
+            if (cache.TryGetValue(frequency, out float result))
                 return result;
 
             var freqKeys = AmplitudesDb.Keys.Zip(AmplitudesDb.Keys.Skip(1), (a, b) => new { LowerKey = a, UpperKey = b })

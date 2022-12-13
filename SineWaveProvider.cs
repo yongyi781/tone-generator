@@ -7,7 +7,6 @@ namespace ToneGenerator
     /// <summary>
     /// A wave provider that outputs a sine wave.
     /// </summary>
-    [CLSCompliant(false)]
     public class SineWaveProvider : WaveProvider32
     {
         /// <summary>

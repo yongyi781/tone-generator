@@ -9,7 +9,6 @@ namespace ToneGenerator
     /// <summary>
     /// Tweaked volume slider that is double buffered and fixes divide by 0 bug on Windows XP.
     /// </summary>
-    [CLSCompliant(false)]
     public class VolumeSlider : UserControl
     {
         /// <summary>
@@ -76,7 +75,7 @@ namespace ToneGenerator
         /// <summary>
         /// Volume changed event
         /// </summary>
-        public event EventHandler VolumeChanged;
+        public event EventHandler? VolumeChanged;
 
         /// <summary>
         /// Raises the <see cref="HandleCreated"/> event.

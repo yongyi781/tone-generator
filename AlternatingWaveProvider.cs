@@ -5,7 +5,6 @@ namespace ToneGenerator
     /// <summary>
     /// Alternates between two sides, each having 3 soundtracks (in the current implementation).
     /// </summary>
-    [CLSCompliant(false)]
     public class AlternatingWaveProvider : SineWaveProvider
     {
         public AlternatingWaveProvider(double period)
@@ -44,7 +43,7 @@ namespace ToneGenerator
                     buffer[i + offset + 1] = right;
 
                     ++Sample;
-                    if (Sample % ToneSamples == 0)
+                    if (Sample % ToneSamples == 0 && DutyCycle != 1)
                         SetSoundtrackIndex(0);
                     else if (Sample % ToneSamples == (int)((1 - DutyCycle) * ToneSamples))
                         SetSoundtrackIndex(1);

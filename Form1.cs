@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using Newtonsoft.Json;
-using System.IO;
-using System.Linq;
 
 namespace ToneGenerator
 {
@@ -15,7 +8,7 @@ namespace ToneGenerator
     /// </summary>
     public partial class Form1 : Form
     {
-        public const int DefaultLatency = 100;
+        public const int DefaultLatency = 128;
         public const int NumSoundtracks = 6;
         public const float DefaultAmplitude = 0.01f;
 
@@ -25,7 +18,6 @@ namespace ToneGenerator
 
         private readonly List<SoundtrackControl> soundtrackControls = new List<SoundtrackControl>();
 
-        [CLSCompliant(false)]
         public SineWaveProvider CurrentWaveProvider { get; set; }
 
         /// <summary>
@@ -54,7 +46,7 @@ namespace ToneGenerator
                 sineWaveProvider.Soundtracks.Add(control.Soundtrack);
                 alternatingWaveProvider.Soundtracks.Add(control.Soundtrack);
             }
-            
+
             modeComboBox.SelectedIndex = 0;
             //LoadCalibration(sineWaveProvider, Ear.Left, "Calibration/leftEarHearingLoss.json");
             //LoadCalibration(sineWaveProvider, Ear.Right, "Calibration/rightEarHearingLoss.json");
@@ -174,7 +166,6 @@ namespace ToneGenerator
                 soundtrackControl.SetMinimumVolume((float)minVolumeUpDown.Value);
                 soundtrackControl.SetMaximumValue((float)maxVolumeUpDown.Value);
             }
-            masterVolumeSlider.MinimumDB = (float)minVolumeUpDown.Value;
         }
 
         private void ModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -266,6 +257,11 @@ namespace ToneGenerator
         {
             if (alternatingWaveProvider != null)
                 alternatingWaveProvider.DutyCycle = (double)dutyCycleUpDown.Value;
+        }
+
+        private void masterVolumeSlider_VolumeChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
