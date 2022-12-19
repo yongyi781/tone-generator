@@ -66,7 +66,7 @@ namespace ToneGenerator
             this.rightCheckBox.TabIndex = 26;
             this.rightCheckBox.Text = "&Right";
             this.rightCheckBox.UseVisualStyleBackColor = true;
-            this.rightCheckBox.CheckedChanged += new System.EventHandler(this.rightCheckBox_CheckedChanged);
+            this.rightCheckBox.CheckedChanged += new System.EventHandler(this.RightCheckBox_CheckedChanged);
             // 
             // leftCheckBox
             // 
@@ -82,7 +82,7 @@ namespace ToneGenerator
             this.leftCheckBox.TabIndex = 25;
             this.leftCheckBox.Text = "&Left";
             this.leftCheckBox.UseVisualStyleBackColor = true;
-            this.leftCheckBox.CheckedChanged += new System.EventHandler(this.leftCheckBox_CheckedChanged);
+            this.leftCheckBox.CheckedChanged += new System.EventHandler(this.LeftCheckBox_CheckedChanged);
             // 
             // volumeLabel
             // 
@@ -105,7 +105,7 @@ namespace ToneGenerator
             this.nextOctaveButton.TabIndex = 22;
             this.nextOctaveButton.Text = "x2";
             this.nextOctaveButton.UseVisualStyleBackColor = true;
-            this.nextOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.nextOctaveButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // prevOctaveButton
             // 
@@ -118,7 +118,7 @@ namespace ToneGenerator
             this.prevOctaveButton.TabIndex = 21;
             this.prevOctaveButton.Text = "/2";
             this.prevOctaveButton.UseVisualStyleBackColor = true;
-            this.prevOctaveButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.prevOctaveButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // nextNoteButton
             // 
@@ -131,7 +131,7 @@ namespace ToneGenerator
             this.nextNoteButton.TabIndex = 20;
             this.nextNoteButton.Text = "+1";
             this.nextNoteButton.UseVisualStyleBackColor = true;
-            this.nextNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.nextNoteButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // prevNoteButton
             // 
@@ -144,7 +144,7 @@ namespace ToneGenerator
             this.prevNoteButton.TabIndex = 19;
             this.prevNoteButton.Text = "-1";
             this.prevNoteButton.UseVisualStyleBackColor = true;
-            this.prevNoteButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.prevNoteButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // frequencyLabel
             // 
@@ -182,7 +182,7 @@ namespace ToneGenerator
             0,
             0,
             0});
-            this.frequencyNumeric.ValueChanged += new System.EventHandler(this.frequencyNumeric_ValueChanged);
+            this.frequencyNumeric.ValueChanged += new System.EventHandler(this.FrequencyNumeric_ValueChanged);
             // 
             // volumePictureBox
             // 
@@ -207,7 +207,7 @@ namespace ToneGenerator
             this.dBVolumeSlider.TabIndex = 27;
             this.toolTip.SetToolTip(this.dBVolumeSlider, "Controls the volume on a logarithmic scale.");
             this.dBVolumeSlider.Volume = 0.25F;
-            this.dBVolumeSlider.VolumeChanged += new System.EventHandler(this.dBVolumeSlider_VolumeChanged);
+            this.dBVolumeSlider.VolumeChanged += new System.EventHandler(this.DBVolumeSlider_VolumeChanged);
             // 
             // plusButton
             // 
@@ -220,7 +220,7 @@ namespace ToneGenerator
             this.plusButton.TabIndex = 18;
             this.plusButton.Text = "+.5";
             this.plusButton.UseVisualStyleBackColor = true;
-            this.plusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.plusButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // minusButton
             // 
@@ -233,7 +233,7 @@ namespace ToneGenerator
             this.minusButton.TabIndex = 17;
             this.minusButton.Text = "-.5";
             this.minusButton.UseVisualStyleBackColor = true;
-            this.minusButton.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.minusButton.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // plus2Button
             // 
@@ -246,7 +246,7 @@ namespace ToneGenerator
             this.plus2Button.TabIndex = 29;
             this.plus2Button.Text = "+2";
             this.plus2Button.UseVisualStyleBackColor = true;
-            this.plus2Button.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.plus2Button.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // minus2Button
             // 
@@ -259,7 +259,7 @@ namespace ToneGenerator
             this.minus2Button.TabIndex = 28;
             this.minus2Button.Text = "-2";
             this.minus2Button.UseVisualStyleBackColor = true;
-            this.minus2Button.Click += new System.EventHandler(this.changeFrequencyButtons_Click);
+            this.minus2Button.Click += new System.EventHandler(this.ChangeFrequencyButtons_Click);
             // 
             // SoundtrackControl
             // 
